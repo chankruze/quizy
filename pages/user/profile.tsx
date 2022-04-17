@@ -5,15 +5,18 @@ Created: Sun Apr 17 2022 14:20:56 GMT+0530 (India Standard Time)
 Copyright (c) geekofia 2022 and beyond
 */
 
-import { useSession, signIn, signOut } from "next-auth/react";
-import { Formik, Form, Field, FormikValues } from "formik";
+import Router from "next/router";
+import { useSession, signIn } from "next-auth/react";
+import { Formik, Form, FormikValues } from "formik";
 import * as Yup from "yup";
+import axios from "axios";
 import { User } from "../../types/user";
 import Input from "../../components/formik-controls/Input";
 import SubmitButton from "../../components/formik-controls/SubmitButton";
+import Layout from "../../components/modules/Layout";
 
 const Profile = () => {
-  const { data } = useSession({
+  const { data: session, status } = useSession({
     required: true,
     onUnauthenticated() {
       // The user is not authenticated, handle it here.
@@ -21,13 +24,17 @@ const Profile = () => {
     },
   });
 
-  const { email, name, image } = data?.user as User;
+  if (status === "loading") {
+    return <div>Loading...</div>;
+  }
+
+  const { email, name, image } = session?.user as User;
 
   // initial values
   const initialValues = {
-    name: name,
+    name: name || "",
     email: email,
-    image: image,
+    image: image || "",
   };
 
   // validation schema
@@ -40,36 +47,63 @@ const Profile = () => {
   // on submit
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onSubmit = (values: FormikValues, formikBag: any) => {
-    console.log(values);
+    axios
+      .put(`${process.env.NEXT_PUBLIC_API_URL}/user/${email}`, values)
+      .then((res) => {
+        if (res.status === 200) {
+          formikBag.setSubmitting(false);
+          formikBag.resetForm();
+          Router.reload();
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
-    <div>
-      <Formik
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={onSubmit}
-      >
-        {(formikHelpers) => (
-          <Form>
-            <Input id="email" name="email" placeholder="Email" label="Email" />
+    <Layout className="flex flex-col min-h-screen w-full" navbar>
+      <main className="flex flex-col w-full flex-1 py-2 px-2 sm:px-4">
+        <div className="w-full sm:w-[400px] m-auto">
+          <Formik
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={onSubmit}
+          >
+            {(formikHelpers) => (
+              <Form>
+                <Input
+                  id="email"
+                  name="email"
+                  placeholder="Email"
+                  label="Email"
+                />
 
-            <Input id="name" name="name" placeholder="Name" label="Name" />
+                <Input id="name" name="name" placeholder="Name" label="Name" />
 
-            <Input id="image" name="image" placeholder="Image" label="Image" />
+                <Input
+                  id="image"
+                  name="image"
+                  placeholder="Image"
+                  label="Image"
+                />
 
-            <SubmitButton
-              label="Update"
-              isDisabled={
-                !(formikHelpers.isValid && formikHelpers.dirty) ||
-                formikHelpers.isSubmitting
-              }
-              isSubmitting={formikHelpers.isSubmitting}
-            />
-          </Form>
-        )}
-      </Formik>
-    </div>
+                <div className="mt-4">
+                  <SubmitButton
+                    label="Update"
+                    isDisabled={
+                      !(formikHelpers.isValid && formikHelpers.dirty) ||
+                      formikHelpers.isSubmitting
+                    }
+                    isSubmitting={formikHelpers.isSubmitting}
+                  />
+                </div>
+              </Form>
+            )}
+          </Formik>
+        </div>
+      </main>
+    </Layout>
   );
 };
 
