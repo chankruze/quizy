@@ -10,10 +10,11 @@ import { useSession, signIn } from "next-auth/react";
 import { Formik, Form, FormikValues } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
-import { User } from "../../types/user";
-import Input from "../../components/formik-controls/Input";
-import SubmitButton from "../../components/formik-controls/SubmitButton";
-import Layout from "../../components/modules/Layout";
+import { User } from "../types/user";
+// components
+import Layout from "../components/modules/Layout";
+import Input from "../components/formik-controls/Input";
+import SubmitButton from "../components/formik-controls/SubmitButton";
 
 const Profile = () => {
   const { data: session, status } = useSession({

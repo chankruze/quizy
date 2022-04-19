@@ -6,7 +6,9 @@ Copyright (c) geekofia 2022 and beyond
 */
 
 import Head from "next/head";
+import { useRouter } from "next/router";
 import { config } from "../../config";
+import { capitalize } from "../../utils";
 import NavBar from "./NavBar";
 
 interface Props {
@@ -23,18 +25,21 @@ const Layout: React.FC<Props> = ({
   className,
   children,
 }) => {
+  const currentRoute = useRouter().route.split("/").pop();
+
   return (
     <div className={`${className} select-none overflow-hidden`}>
       {/* head */}
       <Head>
         {title ? (
           <title>
-            {title} | {config.APP_NAME}
+            {title || (currentRoute && capitalize(currentRoute))} |{" "}
+            {config.APP_NAME}
           </title>
         ) : (
           <title>{config.APP_NAME}</title>
         )}
-        // TODO: update favicon.ico
+        {/* TODO: update favicon.ico */}
         <link rel="icon" href="/favicon.ico" />
         <meta name="description" content={config.APP_DESCRIPTION} />
         <meta name="author" content={config.APP_AUTHOR} />

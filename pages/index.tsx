@@ -15,9 +15,15 @@ const Home: NextPage = () => {
   return (
     <Layout className="flex flex-col min-h-screen w-full" navbar>
       <main className="flex flex-col w-full flex-1 py-2 px-2 sm:px-4">
-        <h1 className="text-8xl font-black py-24 mx-auto font-montserrat text-center">
-          Welcome to <span className="text-blue-500">{config.APP_NAME}</span>
-        </h1>
+        <div className="py-20 text-center">
+          <h1 className="text-8xl font-black  mx-auto font-montserrat text-center">
+            Welcome to <span className="text-blue-500">{config.APP_NAME}</span>
+          </h1>
+          <p className="py-4 text-nunito text-xl">
+            This is a place where you can share your knowledge and experience.
+            Fill your bio data to get verified.
+          </p>
+        </div>
 
         {status === "authenticated" && (
           <div>
@@ -25,7 +31,7 @@ const Home: NextPage = () => {
             <div className="flex justify-center">
               {/* and if bio data not filled yet, render a button to redirect to the form */}
               {!isBioDataCompleted && (
-                <Link href="/user/bio">
+                <Link href="/bio-data">
                   <a
                     className="flex items-center py-4 px-8 rounded-md capitalize text-xl 
                     text-white bg-blue-500 hover:bg-blue-500/90 font-poppins"

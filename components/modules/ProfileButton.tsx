@@ -28,7 +28,7 @@ const ProfileButton = () => {
   return (
     <div className="relative">
       <div
-        className="h-full px-3 py-2 flex items-center justify-evenly cursor-pointer bg-gray-200 rounded"
+        className="h-full px-3 py-2 flex items-center justify-evenly cursor-pointer bg-gray-100 rounded-md"
         onClick={() => setExpanded(!isExpanded)}
       >
         {image && (
@@ -44,7 +44,7 @@ const ProfileButton = () => {
       </div>
       {isExpanded && (
         <div className="absolute min-w-full mt-1 bg-white text-gray-700 shadow-md rounded-md">
-          <Link href="/user/profile">
+          <Link href="/profile">
             <a>
               <p className="capitalize py-2 px-3 hover:bg-gray-100">
                 Edit profile

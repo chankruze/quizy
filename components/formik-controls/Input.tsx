@@ -6,6 +6,7 @@ Copyright (c) geekofia 2022 and beyond
 */
 
 import { ErrorMessage, Field } from "formik";
+import Link from "next/link";
 import ErrorDiv from "./ErrorDiv";
 
 interface Props {
@@ -14,6 +15,8 @@ interface Props {
   label: string;
   placeholder: string;
   smallLabel?: boolean;
+  disabled?: boolean;
+  disabledMessage?: any;
 }
 
 const Input: React.FC<Props> = ({
@@ -22,21 +25,34 @@ const Input: React.FC<Props> = ({
   label,
   placeholder,
   smallLabel = false,
+  disabled = false,
+  disabledMessage,
 }) => {
   return (
-    <div>
+    <div className="flex flex-col">
       <label
         htmlFor={id}
         className={`${smallLabel ? "text-sm" : "text-lg"} font-medium`}
       >
         {label}
+        {disabled && disabledMessage && (
+          <Link href="/profile">
+            <a className="italic text-xs text-blue-500 hover:text-blue-400 pl-2">
+              {disabledMessage}
+            </a>
+          </Link>
+        )}
       </label>
       <Field
         id={id}
         as="input"
         name={name}
-        className="my-1 px-3 py-2 w-full bg-white border text-lg rounded-md outline-none focus:border-green-400"
+        className={`my-1 px-3 py-2 w-full border text-lg rounded-md outline-none 
+        focus:border-green-400 ${
+          disabled ? "cursor-not-allowed bg-gray-100" : "bg-white"
+        }`}
         placeholder={placeholder}
+        disabled={disabled}
       />
       <ErrorMessage name={name} component={ErrorDiv} />
     </div>

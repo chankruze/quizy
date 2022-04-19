@@ -16,6 +16,8 @@ import { config } from "../../config";
 import { MdLogin } from "react-icons/md";
 import { RiMenu3Line } from "react-icons/ri";
 import { IoLogoVercel } from "react-icons/io5";
+import { navbarLinks } from "../../config/navbarLinks";
+import NavLink from "../elements/NavLink";
 
 const NavBar = () => {
   const { status } = useSession();
@@ -34,25 +36,33 @@ const NavBar = () => {
           {config.APP_VERSION}
         </p>
       </div>
+
+      {/* mobile layout */}
       <div className="flex sm:hidden justify-center items-center">
         <RiMenu3Line size={32} />
       </div>
       <div className="hidden sm:flex gap-1 sm:gap-2 flex-wrap">
+        {/* navbar links */}
+        {navbarLinks.map((link) => (
+          <NavLink key={link.name} link={link} />
+        ))}
         {/* profile button */}
-        {status === "authenticated" ? (
-          <div className="flex gap-2 items-center">
-            {/* <IconButton btnType="danger" onClick={signOut}>
+        <div className="hidden sm:flex">
+          {status === "authenticated" ? (
+            <div className="flex gap-2 items-center">
+              {/* <IconButton btnType="danger" onClick={signOut}>
                             <MdLogout size={24} />
                             <span className="ml-1 capitalize">sign out</span>
                         </IconButton> */}
-            <ProfileButton />
-          </div>
-        ) : (
-          <IconButton btnType="primary" onClick={signIn}>
-            <MdLogin size={24} />
-            <span className="ml-1 capitalize">sign in</span>
-          </IconButton>
-        )}
+              <ProfileButton />
+            </div>
+          ) : (
+            <IconButton btnType="primary" onClick={signIn}>
+              <MdLogin size={24} />
+              <span className="ml-1 capitalize">sign in</span>
+            </IconButton>
+          )}
+        </div>
       </div>
     </div>
   );
