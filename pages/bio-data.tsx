@@ -239,7 +239,6 @@ const BioData = () => {
             <p>You can edit your Bio Data anytime.</p>
           </div>
         )}
-        <Divider />
         {/* if verification pending hide the form else show */}
         {verification === "pending" ? (
           <div className="flex items-center justify-center bg-yellow-200 py-10 px-4 rounded-md font-poppins">
@@ -247,127 +246,130 @@ const BioData = () => {
             <p className="ml-2 text-xl">Verification pending</p>
           </div>
         ) : (
-          <Formik
-            initialValues={initialValues}
-            validationSchema={validationSchema}
-            onSubmit={onSubmit}
-          >
-            {(formikHelpers) => (
-              <Form>
-                {/* 1. name */}
-                <Input
-                  id="name"
-                  name="name"
-                  label="Name"
-                  placeholder="Enter your name"
-                  disabled={true}
-                  disabledMessage="(edit in profile )"
-                />
-                {/* 2. email */}
-                <Input
-                  id="email"
-                  name="email"
-                  label="email"
-                  placeholder="Enter your email"
-                  disabled={true}
-                  disabledMessage="(edit in profile )"
-                />
+          <>
+            <Divider />
+            <Formik
+              initialValues={initialValues}
+              validationSchema={validationSchema}
+              onSubmit={onSubmit}
+            >
+              {(formikHelpers) => (
+                <Form>
+                  {/* 1. name */}
+                  <Input
+                    id="name"
+                    name="name"
+                    label="Name"
+                    placeholder="Enter your name"
+                    disabled={true}
+                    disabledMessage="(edit in profile )"
+                  />
+                  {/* 2. email */}
+                  <Input
+                    id="email"
+                    name="email"
+                    label="email"
+                    placeholder="Enter your email"
+                    disabled={true}
+                    disabledMessage="(edit in profile )"
+                  />
 
-                <div className="flex flex-wrap items-center gap-4 py-2">
-                  {/* 7. registration no. */}
-                  <div className="flex-1">
-                    <Input
-                      id="regdNo"
-                      name="regdNo"
-                      label="Registration No."
-                      placeholder="Your registration no."
-                      // once verified disable the registration no. field
-                      disabled={verification === "verified"}
-                    />
+                  <div className="flex flex-wrap items-center gap-4 py-2">
+                    {/* 7. registration no. */}
+                    <div className="flex-1">
+                      <Input
+                        id="regdNo"
+                        name="regdNo"
+                        label="Registration No."
+                        placeholder="Your registration no."
+                        // once verified disable the registration no. field
+                        disabled={verification === "verified"}
+                      />
+                    </div>
+                    {/* 9. dob */}
+                    <div className="flex-1">
+                      <DatePicker id="dob" name="dob" label="Date of Birth" />
+                    </div>
                   </div>
-                  {/* 9. dob */}
-                  <div className="flex-1">
-                    <DatePicker id="dob" name="dob" label="Date of Birth" />
-                  </div>
-                </div>
-                {/* 3. photo */}
-                {/* <Input
+                  {/* 3. photo */}
+                  {/* <Input
                 id="photo"
                 name="photo"
                 label="photo"
                 placeholder="Enter your pic url"
               /> */}
-                <div className="flex flex-wrap items-center gap-4 py-2">
-                  {/* 5. (select) semester */}
-                  <Select
-                    id="semester"
-                    name="semester"
-                    options={semesters}
-                    label="Semester"
+                  <div className="flex flex-wrap items-center gap-4 py-2">
+                    {/* 5. (select) semester */}
+                    <Select
+                      id="semester"
+                      name="semester"
+                      options={semesters}
+                      label="Semester"
+                    />
+                    {/* 6. (select) branch */}
+                    <Select
+                      id="branch"
+                      name="branch"
+                      options={branches}
+                      label="Branch"
+                    />
+                  </div>
+                  {/* 8. gender */}
+                  <div className="flex flex-wrap items-center gap-4 py-2">
+                    <Select
+                      id="gender"
+                      name="gender"
+                      label="Gender"
+                      options={genderOptions}
+                    />
+                    <Select
+                      id="caste"
+                      name="caste"
+                      label="Caste"
+                      options={casteOptions}
+                    />
+                  </div>
+                  {/* 4. father name */}
+                  <Input
+                    id="fatherName"
+                    name="fatherName"
+                    label="Father's Name"
+                    placeholder="Father's name"
                   />
-                  {/* 6. (select) branch */}
-                  <Select
-                    id="branch"
-                    name="branch"
-                    options={branches}
-                    label="Branch"
-                  />
-                </div>
-                {/* 8. gender */}
-                <div className="flex flex-wrap items-center gap-4 py-2">
-                  <Select
-                    id="gender"
-                    name="gender"
-                    label="Gender"
-                    options={genderOptions}
-                  />
-                  <Select
-                    id="caste"
-                    name="caste"
-                    label="Caste"
-                    options={casteOptions}
-                  />
-                </div>
-                {/* 4. father name */}
-                <Input
-                  id="fatherName"
-                  name="fatherName"
-                  label="Father's Name"
-                  placeholder="Father's name"
-                />
 
-                <div className="flex flex-wrap items-center gap-4 py-2">
-                  <div className="flex-1">
-                    <Input
-                      id="mob"
-                      name="mob"
-                      label="Mobile No."
-                      placeholder="Your mobile no."
+                  <div className="flex flex-wrap items-center gap-4 py-2">
+                    <div className="flex-1">
+                      <Input
+                        id="mob"
+                        name="mob"
+                        label="Mobile No."
+                        placeholder="Your mobile no."
+                      />
+                    </div>
+                    <div className="flex-1">
+                      <Input
+                        id="fatherMob"
+                        name="fatherMob"
+                        label="Father's Mobile No."
+                        placeholder="Father's mobile no."
+                      />
+                    </div>
+                  </div>
+                  {/* submit button */}
+                  <div className="mt-4">
+                    <SubmitButton
+                      label="submit"
+                      isDisabled={
+                        !(formikHelpers.isValid && formikHelpers.dirty) ||
+                        formikHelpers.isSubmitting
+                      }
+                      isSubmitting={formikHelpers.isSubmitting}
                     />
                   </div>
-                  <div className="flex-1">
-                    <Input
-                      id="fatherMob"
-                      name="fatherMob"
-                      label="Father's Mobile No."
-                      placeholder="Father's mobile no."
-                    />
-                  </div>
-                </div>
-                {/* submit button */}
-                <div className="mt-4">
-                  <SubmitButton
-                    label="submit"
-                    isDisabled={
-                      !(formikHelpers.isValid && formikHelpers.dirty) ||
-                      formikHelpers.isSubmitting
-                    }
-                    isSubmitting={formikHelpers.isSubmitting}
-                  />
-                </div>
-              </Form>
-            )}
-          </Formik>
+                </Form>
+              )}
+            </Formik>
+          </>
         )}
       </main>
     </Layout>
