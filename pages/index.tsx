@@ -17,7 +17,7 @@ const Home: NextPage = () => {
       <main className="flex flex-col w-full flex-1 py-2 px-2 sm:px-4">
         <div className="py-20 text-center">
           <h1 className="text-8xl font-black  mx-auto font-montserrat text-center">
-            Welcome to <span className="text-blue-500">{config.APP_NAME}</span>
+            Welcome to <span className="text-green-500">{config.APP_NAME}</span>
           </h1>
           <p className="py-4 text-nunito text-xl">
             This is a place where you can share your knowledge and experience.
@@ -34,7 +34,7 @@ const Home: NextPage = () => {
                 <Link href="/bio-data">
                   <a
                     className="flex items-center py-4 px-8 rounded-md capitalize text-xl 
-                    text-white bg-blue-500 hover:bg-blue-500/90 font-poppins"
+                    text-white bg-green-500 hover:bg-green-500/90 font-poppins"
                     onClick={() => console.log("Redirect to the bio data form")}
                   >
                     <p className="mr-2">fill your bio data</p>
