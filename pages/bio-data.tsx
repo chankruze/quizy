@@ -9,7 +9,6 @@ import Router from "next/router";
 // swr & fetcher
 import useSWR from "swr";
 import { fetcher } from "../utils/fetcher";
-
 import { useSession, signIn } from "next-auth/react";
 import { Formik, Form, FormikValues } from "formik";
 import * as Yup from "yup";
@@ -79,15 +78,19 @@ const BioData = () => {
     },
   });
 
-  // TODO: check if user is already submitted bio data
-  const { data: student, error } = useSWR(
+  const {
+    data: student,
+    isValidating,
+    error,
+  } = useSWR(
     session?.user
       ? `${process.env.NEXT_PUBLIC_API_URL}/student/email/${session?.user.email}`
       : null,
     fetcher,
+    { errorRetryCount: 0 },
   );
 
-  if (status === "loading") {
+  if (status === "loading" || isValidating) {
     return <div>Loading...</div>;
   }
 
@@ -161,6 +164,7 @@ const BioData = () => {
 
     switch (verification) {
       case "verified":
+      case "rejected":
         return axios
           .put(
             `${process.env.NEXT_PUBLIC_API_URL}/student/${student._id}/biodata`,
@@ -169,10 +173,14 @@ const BioData = () => {
           .then((res) => {
             if (res.status === 200) {
               formikBag.setSubmitting(false);
-              formikBag.resetForm();
-              toast.success("Bio data updated", {
+              toast.success("Bio data submitted", {
                 theme: "colored",
+                autoClose: 2000,
               });
+              // dont't wait for swr to update
+              setTimeout(() => {
+                Router.reload();
+              }, 2000);
             }
           })
           .catch((err) => {
@@ -191,10 +199,14 @@ const BioData = () => {
           .then((res) => {
             if (res.status === 201) {
               formikBag.setSubmitting(false);
-              formikBag.resetForm();
               toast.success("Bio data submitted", {
                 theme: "colored",
+                autoClose: 2000,
               });
+              // dont't wait for swr to update
+              setTimeout(() => {
+                Router.reload();
+              }, 2000);
             }
           })
           .catch((err) => {
@@ -273,7 +285,6 @@ const BioData = () => {
                     disabled={true}
                     disabledMessage="(edit in profile )"
                   />
-
                   <div className="flex flex-wrap items-center gap-4 py-2">
                     {/* 7. registration no. */}
                     <div className="flex-1">
@@ -336,8 +347,8 @@ const BioData = () => {
                     label="Father's Name"
                     placeholder="Father's name"
                   />
-
                   <div className="flex flex-wrap items-center gap-4 py-2">
+                    {/* 11. mob */}
                     <div className="flex-1">
                       <Input
                         id="mob"
@@ -346,6 +357,7 @@ const BioData = () => {
                         placeholder="Your mobile no."
                       />
                     </div>
+                    {/* 12. father mob */}
                     <div className="flex-1">
                       <Input
                         id="fatherMob"
