@@ -10,14 +10,14 @@ import { useSession, signIn } from "next-auth/react";
 // components
 import IconButton from "../elements/IconButton";
 import ProfileButton from "./ProfileButton";
+import NavLink from "../elements/NavLink";
 // config
 import { config } from "../../config";
+import { navbarLinks } from "../../config/navbarLinks";
 // icons
 import { MdLogin } from "react-icons/md";
 import { RiMenu3Line } from "react-icons/ri";
 import { IoLogoVercel } from "react-icons/io5";
-import { navbarLinks } from "../../config/navbarLinks";
-import NavLink from "../elements/NavLink";
 
 const NavBar = () => {
   const { status } = useSession();
@@ -43,17 +43,15 @@ const NavBar = () => {
       </div>
       <div className="hidden sm:flex gap-1 sm:gap-2 flex-wrap">
         {/* navbar links */}
-        {navbarLinks.map((link) => (
-          <NavLink key={link.name} link={link} />
-        ))}
+        <div className="flex flex-wrap">
+          {navbarLinks.map((link) => (
+            <NavLink key={link.name} link={link} />
+          ))}
+        </div>
         {/* profile button */}
-        <div className="hidden sm:flex">
+        <div>
           {status === "authenticated" ? (
-            <div className="flex gap-2 items-center">
-              {/* <IconButton btnType="danger" onClick={signOut}>
-                            <MdLogout size={24} />
-                            <span className="ml-1 capitalize">sign out</span>
-                        </IconButton> */}
+            <div className="flex items-center">
               <ProfileButton />
             </div>
           ) : (
