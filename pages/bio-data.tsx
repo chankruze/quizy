@@ -87,7 +87,7 @@ const BioData = () => {
       ? `${process.env.NEXT_PUBLIC_API_URL}/student/email/${session?.user.email}`
       : null,
     fetcher,
-    { errorRetryCount: 0 },
+    { errorRetryCount: 0, revalidateOnFocus: false },
   );
 
   if (status === "loading" || isValidating) {
