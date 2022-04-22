@@ -25,7 +25,7 @@ const NavBar = () => {
   return (
     <div className="w-full flex justify-between p-2 sm:px-4 border-b border-gray-200">
       <div className="flex gap-1">
-        <Link href="/">
+        <Link href="/" passHref>
           <p className="font-bold text-3xl flex items-center cursor-pointer">
             <IoLogoVercel size={32} />
             <a className="ml-1">{config.APP_NAME}</a>

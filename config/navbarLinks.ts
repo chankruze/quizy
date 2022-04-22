@@ -14,8 +14,8 @@ export const navbarLinks = [
     icon: MdHome,
   },
   {
-    name: "Test",
-    url: "/test",
+    name: "Quiz",
+    url: "/quiz",
     icon: MdQuestionAnswer,
   },
 ];
