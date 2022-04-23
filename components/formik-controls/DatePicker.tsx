@@ -33,7 +33,7 @@ const DatePicker: React.FC<Props> = ({ label, id, name, showTimeSelect }) => {
             id={id}
             dateFormat="dd/MM/yyyy"
             showTimeSelect={showTimeSelect}
-            className="my-1 px-3 py-2 w-full bg-white border text-lg rounded-md outline-none focus:border-green-400"
+            className="my-1 px-3 py-2 w-full bg-white border text-lg rounded-md outline-none focus:border-blue-500"
           />
         )}
       </Field>

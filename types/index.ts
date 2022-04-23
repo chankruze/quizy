@@ -5,25 +5,25 @@ Created: Tue Apr 05 2022 19:54:38 GMT+0530 (India Standard Time)
 Copyright (c) geekofia 2022 and beyond
 */
 
-export type OptionType = {
-  id: string;
-  option: string;
-  isCorrect: boolean;
+export type Option = {
+  label: string;
+  value: string;
 };
 
-export type QuestionType = {
-  id: string;
-  question: string;
-  options: Array<OptionType>;
+export type Question = {
+  title: string;
+  options: Array<Option>;
+  answer: string | number;
 };
 
-export type QuizType = {
-  id: string;
+export type Quiz = {
+  _id: string;
   title: string;
   description: string;
   branch: string;
   semester: string;
-  questions: Array<QuestionType>;
+  date: string;
+  questions: Array<Question>;
 };
 
 export type ErrorType = {

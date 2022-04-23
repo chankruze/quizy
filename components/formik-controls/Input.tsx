@@ -48,7 +48,7 @@ const Input: React.FC<Props> = ({
         as="input"
         name={name}
         className={`my-1 px-3 py-2 w-full border text-lg rounded-md outline-none 
-        focus:border-green-400 ${
+        focus:border-blue-500 ${
           disabled ? "cursor-not-allowed bg-gray-100" : "bg-white"
         }`}
         placeholder={placeholder}

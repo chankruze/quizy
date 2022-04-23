@@ -23,7 +23,8 @@ const Select: React.FC<Props> = ({ id, name, label, options }) => {
         id={id}
         as="select"
         name={name}
-        className="my-1 p-2 flex-1 border focus:outline-none focus:shadow-outline focus:border-green-400 rounded-md"
+        className="my-1 p-2 flex-1 border focus:outline-none focus:shadow-outline 
+        focus:border-blue-500 rounded-md"
       >
         {options.map((option) => (
           <option

@@ -18,7 +18,7 @@ const SubmitButton: React.FC<Props> = ({ label, isDisabled, isSubmitting }) => {
     <button
       type="submit"
       className="w-full p-3 flex items-center gap-1 justify-center capitalize rounded-md 
-      text-white bg-green-600 hover:bg-green-600/90 duration-200 
+      text-white bg-blue-600 hover:bg-blue-500 duration-150 
       disabled:cursor-not-allowed disabled:bg-gray-200"
       disabled={isDisabled}
     >

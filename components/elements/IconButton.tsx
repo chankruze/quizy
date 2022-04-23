@@ -30,7 +30,7 @@ const IconButton: React.FC<Props> = ({ children, btnType, onClick }) => {
   return (
     <div
       className={`flex items-center justify-center gap-1 p-3 font-medium 
-      ${btnStyle} rounded capitalize cursor-pointer transition-all duration-200`}
+      ${btnStyle} rounded capitalize cursor-pointer transition-all duration-150`}
       onClick={onClick}
     >
       {children}

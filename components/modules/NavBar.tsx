@@ -31,7 +31,7 @@ const NavBar = () => {
             <a className="ml-1">{config.APP_NAME}</a>
           </p>
         </Link>
-        <p className="self-end text-xs italic text-blue-500">
+        <p className="self-end text-xs text-blue-600 font-poppins">
           <span>v</span>
           {config.APP_VERSION}
         </p>

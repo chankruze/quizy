@@ -20,8 +20,8 @@ const NavLink: React.FC<Props> = ({ link }) => {
   return (
     <Link href={link.url} key={link.name}>
       <a
-        className="flex items-center px-3 font-medium text-green-500 
-            hover:bg-gray-100 rounded-md"
+        className="flex items-center px-3 font-medium text-blue-500 
+        rounded-md hover:bg-gray-100 hover:shadow-md"
       >
         <link.icon size={28} />
         <p className="pl-1">{link.name}</p>

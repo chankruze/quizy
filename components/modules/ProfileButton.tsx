@@ -29,7 +29,7 @@ const ProfileButton = () => {
     <div className="relative">
       <div
         className="h-full px-3 py-2 flex items-center justify-evenly cursor-pointer 
-        rounded-md font-nunito text-black shadow hover:shadow-md"
+        rounded-md font-nunito text-white bg-blue-600 shadow-md hover:bg-blue-500"
         onClick={() => setExpanded(!isExpanded)}
       >
         {image && (
