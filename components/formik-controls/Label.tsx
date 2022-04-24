@@ -12,7 +12,7 @@ interface Props {
 
 const Label: React.FC<Props> = ({ htmlFor, value }) => {
   return (
-    <label htmlFor={htmlFor} className="text-lg font-medium">
+    <label htmlFor={htmlFor} className="text-lg font-medium font-roboto">
       {value}
     </label>
   );

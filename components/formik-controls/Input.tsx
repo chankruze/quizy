@@ -32,7 +32,7 @@ const Input: React.FC<Props> = ({
     <div className="flex flex-col">
       <label
         htmlFor={id}
-        className={`${smallLabel ? "text-sm" : "text-lg"} font-medium`}
+        className={`${smallLabel ? "text-sm" : "text-lg"} font-medium font-roboto`}
       >
         {label}
         {disabled && disabledMessage && (
