@@ -33,8 +33,42 @@ const Quiz = ({ student, quiz }: QuizPageProps) => {
 
   if (typeof window === "undefined") return null;
 
+  if (!quiz) {
+    return (
+      <Layout navbar>
+        <main className="flex flex-col w-full max-w-6xl m-auto flex-1 py-2 px-2 sm:px-4">
+          <div className="text-center bg-gray-200 p-3 rounded-md">
+            <h1 className="text-2xl font-bold">Invalid Quiz</h1>
+          </div>
+        </main>
+      </Layout>
+    );
+  }
+
+  if (!student) {
+    return (
+      <Layout navbar>
+        <main className="flex flex-col w-full max-w-6xl m-auto flex-1 py-2 px-2 sm:px-4">
+          <div className="text-center bg-gray-200 p-3 rounded-md">
+            <h1 className="text-2xl font-bold">Invalid student</h1>
+          </div>
+        </main>
+      </Layout>
+    );
+  }
+
+  // check if the student's semester matches quiz's semester
+  if (
+    student &&
+    quiz &&
+    student.bioData.semester !== quiz?.semester &&
+    student.bioData.branch !== quiz?.branch
+  ) {
+    return <InvalidQuiz />;
+  }
+
   // check if the student is verified
-  if (student.verification !== "verified") {
+  if (student && student.verification !== "verified") {
     return (
       <Layout navbar>
         <main className="flex flex-col w-full max-w-6xl m-auto flex-1 py-2 px-2 sm:px-4">
@@ -48,14 +82,6 @@ const Quiz = ({ student, quiz }: QuizPageProps) => {
         </main>
       </Layout>
     );
-  }
-
-  // check if the student's semester matches quiz's semester
-  if (
-    student.bioData.semester !== quiz?.semester &&
-    student.bioData.branch !== quiz?.branch
-  ) {
-    return <InvalidQuiz />;
   }
 
   const initialValues = {
@@ -78,16 +104,8 @@ const Quiz = ({ student, quiz }: QuizPageProps) => {
       .then((res) => {
         if (res.status === 201) {
           formikBag.setSubmitting(false);
-          // toast.success("Bio data submitted", {
-          //   theme: "colored",
-          //   autoClose: 2000,
-          // });
-          // dont't wait for swr to update
-          setTimeout(() => {
-            Router.push(
-              `/quiz/${quiz._id}/submission/${res.data.submissionId}`,
-            );
-          }, 2000);
+          formikBag.resetForm();
+          Router.push(`/quiz/${quiz._id}/submission/${res.data.submissionId}`);
         }
       })
       .catch((err) => {
@@ -150,6 +168,7 @@ const Quiz = ({ student, quiz }: QuizPageProps) => {
 };
 
 export async function getServerSideProps(context: NextPageContext) {
+  // get session data
   const session = await getSession(context);
 
   if (!session) {
@@ -162,9 +181,12 @@ export async function getServerSideProps(context: NextPageContext) {
 
   const quizId = context.query.quizId;
 
+  // get quiz data
   const {
     data: { quiz },
   } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/quiz/${quizId}`);
+
+  // get student data
   const { data: student } = await axios.get(
     `${process.env.NEXT_PUBLIC_API_URL}/student/email/${session?.user?.email}`,
   );

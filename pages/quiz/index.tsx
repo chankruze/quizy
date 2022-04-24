@@ -31,7 +31,9 @@ const QuizHome = ({ student }: QuizHomeProps) => {
 
   // get all the quizzes of semster and branch
   const { data, isValidating: updatingQuizzes } = useSWR(
-    `${process.env.NEXT_PUBLIC_API_URL}/quiz/all/semester/${student.bioData.semester}/branch/${student.bioData.branch}`,
+    session
+      ? `${process.env.NEXT_PUBLIC_API_URL}/quiz/all/semester/${student.bioData.semester}/branch/${student.bioData.branch}`
+      : null,
     fetcher,
   );
 
