@@ -37,7 +37,7 @@ const QuizCard: React.FC<QuizCardProps> = ({ quiz }) => {
       >
         {new Date(quiz.date).toLocaleString()}
       </p>
-      <p className="py-2 text-xl font-poppins text-white">{quiz.title}</p>
+      <p className="py-2 sm:text-xl font-poppins text-white">{quiz.title}</p>
     </div>
   );
 };
