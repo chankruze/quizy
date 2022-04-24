@@ -7,7 +7,7 @@ Copyright (c) geekofia 2022 and beyond
 
 import axios from "axios";
 import { NextPageContext } from "next";
-import { getSession } from "next-auth/react";
+import { getSession, signIn, useSession } from "next-auth/react";
 import Layout from "../../../../components/modules/Layout";
 import { Quiz } from "../../../../types";
 import { Student } from "../../../../types/student";
@@ -25,6 +25,14 @@ interface SubmissionPageProps {
 
 const Submission = ({ student, quiz, submission }: SubmissionPageProps) => {
   const { width, height } = useWindowSize();
+
+  const { data: session } = useSession({
+    required: true,
+    onUnauthenticated() {
+      // The user is not authenticated, handle it here.
+      signIn();
+    },
+  });
 
   // calculate the score
   const score = quiz.questions.reduce((prev, question) => {
