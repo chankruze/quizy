@@ -6,7 +6,7 @@ Copyright (c) geekofia 2022 and beyond
 */
 
 import Router from "next/router";
-import { useSession, signIn } from "next-auth/react";
+import { useSession, signIn, getSession } from "next-auth/react";
 import { Formik, Form, FormikValues } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
@@ -15,18 +15,16 @@ import { User } from "../types/user";
 import Layout from "../components/modules/Layout";
 import Input from "../components/formik-controls/Input";
 import SubmitButton from "../components/formik-controls/SubmitButton";
+import { NextPageContext } from "next";
 
 const Profile = () => {
-  const { data: session, status } = useSession({
-    required: true,
-    onUnauthenticated() {
-      // The user is not authenticated, handle it here.
-      signIn();
-    },
-  });
+  const { data: session } = useSession();
 
-  if (status === "loading") {
-    return <div>Loading...</div>;
+  if (typeof window === "undefined") return null;
+
+  if (!session) {
+    signIn();
+    return null;
   }
 
   const { email, name, image } = session?.user as User;
@@ -107,5 +105,19 @@ const Profile = () => {
     </Layout>
   );
 };
+
+export async function getServerSideProps(context: NextPageContext) {
+  const session = await getSession(context);
+
+  if (!session) {
+    return {
+      props: {
+        session: null,
+      },
+    };
+  }
+
+  return { props: { session } };
+}
 
 export default Profile;

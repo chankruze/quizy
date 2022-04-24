@@ -7,6 +7,7 @@ Copyright (c) geekofia 2022 and beyond
 
 import axios from "axios";
 import { NextPageContext } from "next";
+import { Session } from "next-auth";
 import { getSession, signIn, useSession } from "next-auth/react";
 import Image from "next/image";
 import useSWR from "swr";
@@ -21,13 +22,7 @@ interface QuizHomeProps {
 }
 
 const QuizHome = ({ student }: QuizHomeProps) => {
-  const { data: session } = useSession({
-    required: true,
-    onUnauthenticated() {
-      // The user is not authenticated, handle it here.
-      signIn();
-    },
-  });
+  const { data: session } = useSession();
 
   // get all the quizzes of semster and branch
   const { data, isValidating: updatingQuizzes } = useSWR(
@@ -39,38 +34,41 @@ const QuizHome = ({ student }: QuizHomeProps) => {
 
   if (typeof window === "undefined") return null;
 
-  if (session) {
-    return (
-      <Layout className="flex flex-col min-h-screen w-full" navbar>
-        <main className="flex flex-col w-full max-w-6xl m-auto flex-1 p-2 sm:p-4">
-          {/* list all the quizzes of semster and branch */}
-          {!data && updatingQuizzes && <div>refreshing quizzes...</div>}
-          {data && data.quizzes.length > 0 && !updatingQuizzes ? (
-            <div>
-              {data.quizzes.map((quiz: Quiz) => (
-                <QuizCard key={quiz._id} quiz={quiz} />
-              ))}
-            </div>
-          ) : (
-            <div className="flex-1 flex flex-col items-center justify-center">
-              <div className="relative">
-                <Image
-                  src="/undraw-no-data.svg"
-                  alt="fdsfds"
-                  height={200}
-                  width={200}
-                />
-              </div>
-              <p className="mt-4 text-xl font-poppins capitalize text-center">
-                No quizzes for your branch ({student.bioData.branch}) and
-                semester ({student.bioData.semester}).
-              </p>
-            </div>
-          )}
-        </main>
-      </Layout>
-    );
+  if (!session) {
+    signIn();
+    return null;
   }
+
+  return (
+    <Layout className="flex flex-col min-h-screen w-full" navbar>
+      <main className="flex flex-col w-full max-w-6xl m-auto flex-1 p-2 sm:p-4">
+        {/* list all the quizzes of semster and branch */}
+        {!data && updatingQuizzes && <div>refreshing quizzes...</div>}
+        {data && data.quizzes.length > 0 && !updatingQuizzes ? (
+          <div>
+            {data.quizzes.map((quiz: Quiz) => (
+              <QuizCard key={quiz._id} quiz={quiz} />
+            ))}
+          </div>
+        ) : (
+          <div className="flex-1 flex flex-col items-center justify-center">
+            <div className="relative">
+              <Image
+                src="/undraw-no-data.svg"
+                alt="fdsfds"
+                height={200}
+                width={200}
+              />
+            </div>
+            <p className="mt-4 text-xl font-poppins capitalize text-center">
+              No quizzes for your branch ({student.bioData.branch}) and semester
+              ({student.bioData.semester}).
+            </p>
+          </div>
+        )}
+      </main>
+    </Layout>
+  );
 };
 
 export async function getServerSideProps(context: NextPageContext) {

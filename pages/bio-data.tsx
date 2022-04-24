@@ -73,15 +73,14 @@ interface Props {
 }
 
 const BioData = ({ student }: Props) => {
-  const { data: session } = useSession({
-    required: true,
-    onUnauthenticated() {
-      // The user is not authenticated, handle it here.
-      signIn();
-    },
-  });
+  const { data: session } = useSession();
 
   if (typeof window === "undefined") return null;
+
+  if (!session) {
+    signIn();
+    return null;
+  }
 
   // extract user data from session
   const { email, name, image } = session?.user as User;

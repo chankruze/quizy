@@ -25,14 +25,14 @@ interface SubmissionPageProps {
 
 const Submission = ({ student, quiz, submission }: SubmissionPageProps) => {
   const { width, height } = useWindowSize();
+  const { data: session } = useSession();
 
-  const { data: session } = useSession({
-    required: true,
-    onUnauthenticated() {
-      // The user is not authenticated, handle it here.
-      signIn();
-    },
-  });
+  if (typeof window === "undefined") return null;
+
+  if (!session) {
+    signIn();
+    return null;
+  }
 
   // calculate the score
   const score = quiz.questions.reduce((prev, question) => {

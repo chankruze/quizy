@@ -23,44 +23,17 @@ interface QuizPageProps {
 }
 
 const Quiz = ({ student, quiz }: QuizPageProps) => {
-  const { data: session } = useSession({
-    required: true,
-    onUnauthenticated() {
-      // The user is not authenticated, handle it here.
-      signIn();
-    },
-  });
+  const { data: session } = useSession();
 
   if (typeof window === "undefined") return null;
 
-  if (!quiz) {
-    return (
-      <Layout navbar>
-        <main className="flex flex-col w-full max-w-6xl m-auto flex-1 py-2 px-2 sm:px-4">
-          <div className="text-center bg-gray-200 p-3 rounded-md">
-            <h1 className="text-2xl font-bold">Invalid Quiz</h1>
-          </div>
-        </main>
-      </Layout>
-    );
-  }
-
-  if (!student) {
-    return (
-      <Layout navbar>
-        <main className="flex flex-col w-full max-w-6xl m-auto flex-1 py-2 px-2 sm:px-4">
-          <div className="text-center bg-gray-200 p-3 rounded-md">
-            <h1 className="text-2xl font-bold">Invalid student</h1>
-          </div>
-        </main>
-      </Layout>
-    );
+  if (!session) {
+    signIn();
+    return null;
   }
 
   // check if the student's semester matches quiz's semester
   if (
-    student &&
-    quiz &&
     student.bioData.semester !== quiz?.semester &&
     student.bioData.branch !== quiz?.branch
   ) {
@@ -68,7 +41,7 @@ const Quiz = ({ student, quiz }: QuizPageProps) => {
   }
 
   // check if the student is verified
-  if (student && student.verification !== "verified") {
+  if (student.verification !== "verified") {
     return (
       <Layout navbar>
         <main className="flex flex-col w-full max-w-6xl m-auto flex-1 py-2 px-2 sm:px-4">
