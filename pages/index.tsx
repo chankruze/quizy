@@ -50,7 +50,7 @@ const Home = ({ student }: Props) => {
                   Welcome back,
                   <br />
                   <span className="text-blue-600 text-5xl">
-                    Rashmi Rekha Mohanty
+                    {student.bioData.name}
                   </span>
                 </h1>
                 <p className="mt-3 text-base text-gray-700 font-nunito sm:mt-4 sm:text-xl lg:text-lg xl:text-xl">
@@ -64,7 +64,7 @@ const Home = ({ student }: Props) => {
                         leading-6 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 duration-150 ease-in-out cursor-pointer 
                         py-3 px-8 md:py-4 md:text-lg md:px-10 mx-auto lg:mx-0"
                       >
-                        Check Quizzes
+                        Attend Quizzes
                       </a>
                     </Link>
                   </div>
