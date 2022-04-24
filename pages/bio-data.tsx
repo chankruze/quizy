@@ -7,9 +7,7 @@ Copyright (c) geekofia 2022 and beyond
 
 import Router from "next/router";
 // swr & fetcher
-import useSWR from "swr";
-import { fetcher } from "../utils/fetcher";
-import { useSession, signIn } from "next-auth/react";
+import { useSession, signIn, getSession } from "next-auth/react";
 import { Formik, Form, FormikValues } from "formik";
 import * as Yup from "yup";
 import Layout from "../components/modules/Layout";
@@ -26,6 +24,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { MdTimer } from "react-icons/md";
 import Divider from "../components/elements/Divider";
+import { NextPageContext } from "next";
 
 const genderOptions = [
   {
@@ -69,8 +68,12 @@ const casteOptions = [
   },
 ];
 
-const BioData = () => {
-  const { data: session, status } = useSession({
+interface Props {
+  student: Student | null;
+}
+
+const BioData = ({ student }: Props) => {
+  const { data: session } = useSession({
     required: true,
     onUnauthenticated() {
       // The user is not authenticated, handle it here.
@@ -78,21 +81,7 @@ const BioData = () => {
     },
   });
 
-  const {
-    data: student,
-    isValidating,
-    error,
-  } = useSWR(
-    session?.user
-      ? `${process.env.NEXT_PUBLIC_API_URL}/student/email/${session?.user.email}`
-      : null,
-    fetcher,
-    { errorRetryCount: 0, revalidateOnFocus: false },
-  );
-
-  if (status === "loading" || isValidating) {
-    return <div>Loading...</div>;
-  }
+  if (typeof window === "undefined") return null;
 
   // extract user data from session
   const { email, name, image } = session?.user as User;
@@ -167,7 +156,7 @@ const BioData = () => {
       case "rejected":
         return axios
           .put(
-            `${process.env.NEXT_PUBLIC_API_URL}/student/${student._id}/biodata`,
+            `${process.env.NEXT_PUBLIC_API_URL}/student/${student?._id}/biodata`,
             values,
           )
           .then((res) => {
@@ -387,5 +376,23 @@ const BioData = () => {
     </Layout>
   );
 };
+
+export async function getServerSideProps(context: NextPageContext) {
+  const session = await getSession(context);
+
+  if (!session) {
+    return {
+      props: {
+        session: null,
+      },
+    };
+  }
+
+  const { data: student } = await axios.get(
+    `${process.env.NEXT_PUBLIC_API_URL}/student/email/${session.user?.email}`,
+  );
+
+  return { props: { session, student } };
+}
 
 export default BioData;
