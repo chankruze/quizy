@@ -261,8 +261,8 @@ const BioData = ({ student }: Props) => {
                     name="name"
                     label="Name"
                     placeholder="Enter your name"
-                    disabled={true}
-                    disabledMessage="(edit in profile )"
+                    disabled={name ? true : false}
+                    disabledMessage="(edit in profile)"
                   />
                   {/* 2. email */}
                   <Input
@@ -271,7 +271,7 @@ const BioData = ({ student }: Props) => {
                     label="email"
                     placeholder="Enter your email"
                     disabled={true}
-                    disabledMessage="(edit in profile )"
+                    disabledMessage="(edit in profile)"
                   />
                   <div className="flex flex-wrap items-center gap-4 py-2">
                     {/* 7. registration no. */}

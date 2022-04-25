@@ -151,6 +151,7 @@ export async function getServerSideProps(context: NextPageContext) {
 
   const quizId = context.query.quizId;
   let student: Student | null = null;
+  let quiz: Quiz | null = null;
 
   // get student data
   try {
@@ -165,13 +166,15 @@ export async function getServerSideProps(context: NextPageContext) {
 
   // get quiz data
   try {
-    const {
-      data: { quiz },
-    } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/quiz/${quizId}`);
-    return { props: { session, student, quiz } };
+    const { data } = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/quiz/${quizId}`,
+    );
+    quiz = data;
   } catch (err) {
-    return { props: { session, student, quiz: null } };
+    quiz = null;
   }
+
+  return { props: { session, student, quiz } };
 }
 
 export default Quiz;

@@ -13,10 +13,6 @@ interface Props {
 const Home = ({ student }: Props) => {
   const { data: session } = useSession();
 
-  // we have 3 cases:
-  // 1. student is not signed in
-  console.log({ session, student });
-
   return (
     <Layout className="flex flex-col min-h-screen w-full" navbar>
       <main className="flex flex-wrap-reverse w-full flex-1 py-2 px-2 sm:px-4">
@@ -29,7 +25,7 @@ const Home = ({ student }: Props) => {
                   className="text-4xl tracking-tight leading-10 font-extrabold font-poppins 
                 text-gray-900 sm:leading-none sm:text-6xl lg:text-5xl xl:text-6xl"
                 >
-                  Submit Biodata📄
+                  Submit Biodata
                   <br />
                   without the <span className="text-blue-600">tears.</span>
                 </h1>
@@ -87,8 +83,10 @@ const Home = ({ student }: Props) => {
                 >
                   Welcome 👋
                   <br />
-                  <span className="text-blue-600 text-5xl">
-                    {student.bioData.name} || {session.user?.email}
+                  <span className="text-blue-600 text-3xl sm:text-5xl">
+                    {student.bioData.name
+                      ? student.bioData.name
+                      : session.user?.email}
                   </span>
                 </h1>
                 <p className="mt-3 text-base text-gray-700 font-nunito sm:mt-4 sm:text-xl lg:text-lg xl:text-xl">
@@ -117,8 +115,10 @@ const Home = ({ student }: Props) => {
                 >
                   Welcome Back 👋
                   <br />
-                  <span className="text-blue-600 text-5xl">
-                    {student.bioData.name} || {session.user?.email}
+                  <span className="text-blue-600 text-3xl sm:text-5xl">
+                    {student.bioData.name
+                      ? student.bioData.name
+                      : session.user?.email}
                   </span>
                 </h1>
                 <p className="mt-3 text-base text-gray-700 font-nunito sm:mt-4 sm:text-xl lg:text-lg xl:text-xl">
@@ -161,7 +161,9 @@ const Home = ({ student }: Props) => {
                   Welcome 👋
                   <br />
                   <span className="text-blue-600 text-5xl">
-                    {student.bioData.name} || {session.user?.email}
+                    {student.bioData.name
+                      ? student.bioData.name
+                      : session.user?.email}
                   </span>
                 </h1>
                 <p className="mt-3 text-base text-gray-700 font-nunito sm:mt-4 sm:text-xl lg:text-lg xl:text-xl">
