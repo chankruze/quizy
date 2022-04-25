@@ -5,10 +5,14 @@ Created: Thu Apr 14 2022 21:22:57 GMT+0530 (India Standard Time)
 Copyright (c) geekofia 2022 and beyond
 */
 
-const Spinner = () => {
+interface SpinnerProps {
+  color?: string;
+}
+
+const Spinner = ({ color }: SpinnerProps) => {
   return (
     <svg
-      className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+      className={`animate-spin mx-2 h-5 w-5 ${color}`}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
