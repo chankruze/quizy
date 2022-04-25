@@ -387,11 +387,17 @@ export async function getServerSideProps(context: NextPageContext) {
     };
   }
 
-  const { data: student } = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_URL}/student/email/${session.user?.email}`,
-  );
+  try {
+    // get the student profile
+    const { data: student } = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/student/email/${session.user?.email}`,
+    );
 
-  return { props: { session, student } };
+    return { props: { session, student } };
+  } catch (error) {
+    // if student not found, send null
+    return { props: { session, student: null } };
+  }
 }
 
 export default BioData;

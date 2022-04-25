@@ -16,6 +16,7 @@ import Layout from "../../../components/modules/Layout";
 import InvalidQuiz from "../../../components/modules/quiz/InvalidQuiz";
 import { Option, Question, Quiz } from "../../../types";
 import { Student } from "../../../types/student";
+import InvalidStudent from "../../../components/modules/quiz/InvalidStudent";
 
 interface QuizPageProps {
   student: Student;
@@ -32,29 +33,25 @@ const Quiz = ({ student, quiz }: QuizPageProps) => {
     return null;
   }
 
-  // check if the student's semester matches quiz's semester
-  if (
-    student.bioData.semester !== quiz?.semester &&
-    student.bioData.branch !== quiz?.branch
-  ) {
+  if (!quiz) {
     return <InvalidQuiz />;
+  }
+
+  if (!student) {
+    return <InvalidStudent />;
   }
 
   // check if the student is verified
   if (student.verification !== "verified") {
-    return (
-      <Layout navbar>
-        <main className="flex flex-col w-full max-w-6xl m-auto flex-1 py-2 px-2 sm:px-4">
-          <div className="text-center bg-gray-200 p-3 rounded-md">
-            <h1 className="text-2xl font-bold">
-              Your bio data is not verified. Please submit bio data for
-              verification.
-            </h1>
-            <p>Once verified, you will be able to attend quiz.</p>
-          </div>
-        </main>
-      </Layout>
-    );
+    return <InvalidStudent template="NOT_VERIFIED" />;
+  }
+
+  // check if the student is eligible
+  if (
+    student.bioData.semester !== quiz?.semester &&
+    student.bioData.branch !== quiz?.branch
+  ) {
+    return <InvalidStudent template="NOT_ELIGIBLE" />;
   }
 
   const initialValues = {
@@ -153,18 +150,28 @@ export async function getServerSideProps(context: NextPageContext) {
   }
 
   const quizId = context.query.quizId;
-
-  // get quiz data
-  const {
-    data: { quiz },
-  } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/quiz/${quizId}`);
+  let student: Student | null = null;
 
   // get student data
-  const { data: student } = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_URL}/student/email/${session?.user?.email}`,
-  );
+  try {
+    const { data } = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/student/email/${session?.user?.email}`,
+    );
+    // assign student data to student variable
+    student = data;
+  } catch (err) {
+    student = null;
+  }
 
-  return { props: { session, student, quiz } };
+  // get quiz data
+  try {
+    const {
+      data: { quiz },
+    } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/quiz/${quizId}`);
+    return { props: { session, student, quiz } };
+  } catch (err) {
+    return { props: { session, student, quiz: null } };
+  }
 }
 
 export default Quiz;

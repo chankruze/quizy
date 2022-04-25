@@ -79,24 +79,40 @@ export async function getServerSideProps(context: NextPageContext) {
     };
   }
 
+  let student: null | Student = null;
+  let quiz: Quiz | null;
+  let submission: Student | null;
+
   // get the student data
-  const { data: student } = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_URL}/student/email/${session?.user?.email}`,
-  );
+  try {
+    const { data } = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/student/email/${session?.user?.email}`,
+    );
+    student = data;
+  } catch (error) {
+    quiz = null;
+  }
 
   // get the quiz data
-  const {
-    data: { quiz },
-  } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/quiz/${quizId}`);
+  try {
+    const { data } = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/quiz/${quizId}`,
+    );
+    quiz = data;
+  } catch (error) {
+    quiz = null;
+  }
 
   // get the submission data
-  const {
-    data: { submission },
-  } = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_URL}/submission/${submissionId}`,
-  );
+  try {
+    const { data } = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/submission/${submissionId}`,
+    );
+    submission = data;
+  } catch (err) {
+    submission = null;
+  }
 
-  // pass the props to the component
   return {
     props: {
       student,
