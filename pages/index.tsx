@@ -124,7 +124,7 @@ const Home = ({ student }: Props) => {
                 <p className="mt-3 text-base text-gray-700 font-nunito sm:mt-4 sm:text-xl lg:text-lg xl:text-xl">
                   Always keep your bio data updated ;)
                 </p>
-                <div className="mt-4 flex gap-4">
+                <div className="mt-4 flex gap-4 flex-wrap justify-center lg:justify-start">
                   <div className="md:inline-block">
                     <Link href="/quiz" passHref>
                       <a

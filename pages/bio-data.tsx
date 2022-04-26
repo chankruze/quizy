@@ -214,29 +214,35 @@ const BioData = ({ student }: Props) => {
       <main className="flex flex-col w-full max-w-6xl m-auto flex-1 py-2 px-2 sm:px-4">
         <ToastContainer />
         {verification == "notapplied" && (
-          <div className="text-center bg-gray-200 p-3 rounded-md">
-            <h1 className="text-2xl font-bold">
+          <div className="text-center bg-gray-200 p-3 rounded-md font-nunito">
+            <h1 className="md:text-2xl font-bold">
               Please fill the form below and submit your Bio Data.
             </h1>
-            <p>Once verified, you will be able to edit your Bio Data.</p>
+            <p className="text-sm md:text-base">
+              Once verified, you will be able to edit your Bio Data.
+            </p>
           </div>
         )}
 
         {verification == "rejected" && (
-          <div className="text-center bg-red-200 p-3 rounded-md">
-            <h1 className="text-2xl font-bold">
+          <div className="text-center bg-red-200 p-3 rounded-md font-nunito">
+            <h1 className="md:text-2xl font-bold">
               Your Bio Data has been rejected.
             </h1>
-            <p>Please submit correct details</p>
+            <p className="text-sm md:text-base">
+              Please submit correct details
+            </p>
           </div>
         )}
 
         {verification == "verified" && (
-          <div className="text-center bg-green-200 p-3 rounded-md">
-            <h1 className="text-2xl font-bold">
+          <div className="text-center bg-green-200 p-2 md:p-3 rounded-md font-nunito">
+            <h1 className="md:text-2xl font-bold">
               Your Bio Data has been verified successfully.
             </h1>
-            <p>You can edit your Bio Data anytime.</p>
+            <p className="text-sm md:text-base">
+              You can edit your Bio Data anytime.
+            </p>
           </div>
         )}
         {/* if verification pending hide the form else show */}
