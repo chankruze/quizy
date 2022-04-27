@@ -16,6 +16,7 @@ const TabHeader: React.FC<TabHeaderProps> = ({ tab, onClick }) => {
   return (
     <div
       className={`p-3 bg-white cursor-pointer border-b-2 font-bold font-nunito
+      whitespace-nowrap
       ${
         tab.isActive
           ? "text-black border-blue-500"

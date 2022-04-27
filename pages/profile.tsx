@@ -43,7 +43,7 @@ const Profile = () => {
         <div>
           {/* tab headers */}
           {tabs && tabs.length > 0 && (
-            <div className="flex gap-4 border-b border-gray-100">
+            <div className="flex gap-4 border-b border-gray-100 overflow-x-auto">
               {tabs.map((tab: Tab) => (
                 <TabHeader
                   key={tab.id}
