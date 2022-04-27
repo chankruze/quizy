@@ -9,7 +9,7 @@ import Link from "next/link";
 import { useSession, signIn } from "next-auth/react";
 // components
 import IconButton from "../elements/IconButton";
-import ProfileButton from "./ProfileButton";
+import ProfileButton from "../elements/ProfileButton";
 import NavLink from "../elements/NavLink";
 // config
 import { config } from "../../config";
@@ -23,7 +23,7 @@ const NavBar = () => {
   const { status } = useSession();
 
   return (
-    <div className="w-full flex justify-between p-2 sm:px-4 border-b border-gray-200">
+    <div className="w-full flex justify-between p-2 sm:px-4 border-b border-gray-100">
       <div className="flex gap-1">
         <Link href="/" passHref>
           <p className="font-bold font-poppins text-3xl flex items-center cursor-pointer">

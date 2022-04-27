@@ -8,12 +8,11 @@ Copyright (c) geekofia 2022 and beyond
 import axios from "axios";
 import { NextPageContext } from "next";
 import { getSession, signIn, useSession } from "next-auth/react";
-import Image from "next/image";
 import Link from "next/link";
 import useSWR from "swr";
 import Spinner from "../../components/formik-controls/Spinner";
 import Layout from "../../components/modules/Layout";
-import QuizCard from "../../components/modules/QuizCard";
+import QuizCard from "../../components/elements/QuizCard";
 import { Quiz } from "../../types";
 import { Student } from "../../types/student";
 import { fetcher } from "../../utils/fetcher";
