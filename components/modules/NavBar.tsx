@@ -88,7 +88,6 @@ const NavBar = () => {
           </>
         ) : (
           <IconButton btnType="secondary" onClick={signIn}>
-            <GoSignIn size={24} />
             <span className="ml-1 capitalize">sign in</span>
           </IconButton>
         )}
