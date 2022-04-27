@@ -22,9 +22,9 @@ import DatePicker from "../components/formik-controls/DatePicker";
 // react toastify
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { MdTimer } from "react-icons/md";
 import Divider from "../components/elements/Divider";
 import { NextPageContext } from "next";
+import { GoTelescope } from "react-icons/go";
 
 const genderOptions = [
   {
@@ -247,8 +247,8 @@ const BioData = ({ student }: Props) => {
         )}
         {/* if verification pending hide the form else show */}
         {verification === "pending" ? (
-          <div className="flex items-center justify-center bg-yellow-200 py-10 px-4 rounded-md font-poppins">
-            <MdTimer size={48} />
+          <div className="flex items-center justify-center bg-yellow-100 py-10 px-4 rounded-md font-poppins">
+            <GoTelescope size={48} />
             <p className="ml-2 text-xl">Verification pending</p>
           </div>
         ) : (

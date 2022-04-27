@@ -18,7 +18,7 @@ const IconButton: React.FC<Props> = ({ children, btnType, onClick }) => {
       btnStyle = `bg-blue-600 text-white hover:bg-blue-700`;
       break;
     case "secondary":
-      btnStyle = `text-white border bg-white hover:bg-gray-50`;
+      btnStyle = `text-blue-600 border bg-white hover:bg-gray-50`;
       break;
     case "danger":
       btnStyle = `text-white bg-red-600 hover:bg-red-600/90`;

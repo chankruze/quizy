@@ -39,7 +39,7 @@ const Profile = () => {
 
   return (
     <Layout className="flex flex-col min-h-screen w-full" navbar>
-      <main className="flex flex-col w-full flex-1 py-2 px-2 sm:px-4">
+      <main className="flex flex-col w-full flex-1 px-2 sm:px-4">
         <div>
           {/* tab headers */}
           {tabs && tabs.length > 0 && (

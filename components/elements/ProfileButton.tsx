@@ -29,7 +29,7 @@ const ProfileButton = () => {
         rounded-md font-nunito text-white bg-blue-600 shadow-md hover:bg-blue-500"
       >
         {image && (
-          <div className="h-8 w-8 relative mr-2">
+          <div className="h-8 w-8 relative">
             <Image
               src={image as string}
               layout="fill"
@@ -38,7 +38,7 @@ const ProfileButton = () => {
             />
           </div>
         )}
-        {name ? <p>{name}</p> : <p>{email}</p>}
+        <p className="ml-2 hidden sm:block">{name ? name : email}</p>
       </a>
     </Link>
   );

@@ -6,17 +6,19 @@ Copyright (c) geekofia 2022 and beyond
 */
 
 import Link from "next/link";
+import { GoRocket } from "react-icons/go";
 
 const BioDataTab = () => {
   return (
     <div className="w-full md:max-w-md m-auto">
       <Link href="/bio-data" passHref>
         <a
-          className="w-full md:w-auto flex items-center justify-center text-base text-white
+          className="w-full md:w-auto flex items-center justify-center text-base text-white gap-3
           leading-6 font-medium rounded-md bg-blue-600 shadow-md hover:bg-blue-600/80 duration-150 
           ease-in-out cursor-pointer py-3 px-8 md:py-4 md:text-lg md:px-10 mx-auto lg:mx-0"
         >
-          Fill Biodata
+          <GoRocket size={24} />
+          <p>Go to Biodata Page</p>
         </a>
       </Link>
     </div>

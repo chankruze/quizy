@@ -51,7 +51,7 @@ const EditProfileTab = () => {
       });
   };
   return (
-    <div className="w-full md:max-w-md m-auto">
+    <div className="w-full md:max-w-md md:m-auto">
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}

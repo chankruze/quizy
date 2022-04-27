@@ -52,13 +52,13 @@ const Home = ({ student }: Props) => {
                 >
                   Welcome 👋
                   <br />
-                  <span className="text-blue-600 text-3xl">
+                  <span className="text-blue-600 text-xl">
                     {session.user?.email}
                   </span>
                 </h1>
                 <p className="mt-3 text-base text-gray-700 font-nunito sm:mt-4 sm:text-xl lg:text-lg xl:text-xl">
-                  Quizzes conducted requires your bio data to be verified.
-                  Signin with just your email in seconds!
+                  To attend a quiz your bio data to be verified 🙂. You just
+                  need your email to signin and fill your bio data 😉
                 </p>
                 <div className="mt-4 md:inline-block">
                   <Link href="/bio-data" passHref>
@@ -81,7 +81,7 @@ const Home = ({ student }: Props) => {
                   className="text-4xl tracking-tight leading-10 font-extrabold font-poppins 
                 text-gray-900 sm:leading-none sm:text-6xl lg:text-5xl xl:text-6xl"
                 >
-                  Welcome 👋
+                  Hello 👋
                   <br />
                   <span className="text-blue-600 text-3xl sm:text-5xl">
                     {student.bioData.name
@@ -90,13 +90,13 @@ const Home = ({ student }: Props) => {
                   </span>
                 </h1>
                 <p className="mt-3 text-base text-gray-700 font-nunito sm:mt-4 sm:text-xl lg:text-lg xl:text-xl">
-                  Your verification is still pending.
+                  Your bio data verification is still pending 🙄
                 </p>
-                <div className="md:inline-block">
+                <div className="md:inline-block mt-4">
                   <Link href="/bio-data" passHref>
                     <a
                       className="w-full md:w-auto flex items-center justify-center text-base 
-                      leading-6 font-medium rounded-md bg-white shadow-md hover:bg-gray-100 duration-150 
+                      leading-6 font-medium rounded-md bg-blue-600 text-white shadow-md hover:bg-gray-100 duration-150 
                       ease-in-out cursor-pointer py-3 px-8 md:py-4 md:text-lg md:px-10 mx-auto lg:mx-0"
                     >
                       Check Status
@@ -113,7 +113,7 @@ const Home = ({ student }: Props) => {
                   className="text-4xl tracking-tight leading-10 font-extrabold font-poppins 
                 text-gray-900 sm:leading-none sm:text-6xl lg:text-5xl xl:text-6xl"
                 >
-                  Welcome Back 👋
+                  Welcome 👋
                   <br />
                   <span className="text-blue-600 text-3xl sm:text-5xl">
                     {student.bioData.name
@@ -122,7 +122,8 @@ const Home = ({ student }: Props) => {
                   </span>
                 </h1>
                 <p className="mt-3 text-base text-gray-700 font-nunito sm:mt-4 sm:text-xl lg:text-lg xl:text-xl">
-                  Always keep your bio data updated ;)
+                  You can now attend quizzes 🎉. Always keep your bio data
+                  updated 🙂
                 </p>
                 <div className="mt-4 flex gap-4 flex-wrap justify-center lg:justify-start">
                   <div className="md:inline-block">
@@ -167,14 +168,14 @@ const Home = ({ student }: Props) => {
                   </span>
                 </h1>
                 <p className="mt-3 text-base text-gray-700 font-nunito sm:mt-4 sm:text-xl lg:text-lg xl:text-xl">
-                  Quizzes conducted requires your bio data to be verified.
-                  Signin with just your email in seconds!
+                  Your bio data got rejected 😬. Please fill your bio data again
+                  or contact college for more information.
                 </p>
-                <div className="md:inline-block">
+                <div className="md:inline-block mt-4">
                   <Link href="/bio-data" passHref>
                     <a
                       className="w-full md:w-auto flex items-center justify-center text-base 
-                      leading-6 font-medium rounded-md bg-white shadow-md hover:bg-gray-100 duration-150 
+                      leading-6 font-medium rounded-md bg-blue-600 text-white shadow-md hover:bg-gray-100 duration-150 
                       ease-in-out cursor-pointer py-3 px-8 md:py-4 md:text-lg md:px-10 mx-auto lg:mx-0"
                     >
                       Update Biodata
