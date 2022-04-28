@@ -88,7 +88,7 @@ const NavBar = () => {
           </>
         ) : (
           <IconButton btnType="secondary" onClick={signIn}>
-            <span className="ml-1 capitalize">sign in</span>
+            <span className="ml-1 font-nunito">sign in</span>
           </IconButton>
         )}
         {/* TODO: open a popup menu  */}

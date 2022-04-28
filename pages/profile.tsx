@@ -10,9 +10,10 @@ import { useSession, signIn, getSession, signOut } from "next-auth/react";
 import Layout from "../components/modules/Layout";
 import { NextPageContext } from "next";
 import { tabs } from "../config/tabs";
-import { useState } from "react";
+import { createContext, useState } from "react";
 import TabHeader from "../components/modules/profile-tab/TabHeader";
 import TabPage from "../components/modules/profile-tab/ProfileTabPage";
+import axios from "axios";
 
 export type Tab = {
   id: number;
@@ -22,7 +23,15 @@ export type Tab = {
   isActive: boolean;
 };
 
-const Profile = () => {
+interface Props {
+  studentId: string | null | undefined;
+}
+
+export const StudentContext = createContext(
+  {} as { studentId: string | null | undefined },
+);
+
+const Profile = ({ studentId }: Props) => {
   const { data: session } = useSession();
   const [activeTab, setActiveTab] = useState(tabs[0]);
 
@@ -62,9 +71,15 @@ const Profile = () => {
         </div>
         {/* active tab */}
         {activeTab && (
-          <div className="flex-1 flex">
-            <TabPage tab={activeTab} />
-          </div>
+          <StudentContext.Provider
+            value={{
+              studentId,
+            }}
+          >
+            <div className="flex-1 flex">
+              <TabPage tab={activeTab} />
+            </div>
+          </StudentContext.Provider>
         )}
       </main>
     </Layout>
@@ -82,7 +97,19 @@ export async function getServerSideProps(context: NextPageContext) {
     };
   }
 
-  return { props: { session } };
+  try {
+    // get the student profile
+    const { data: student } = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/student/email/${session.user?.email}`,
+    );
+
+    console.log(student);
+
+    return { props: { session, studentId: student._id } };
+  } catch (error) {
+    // if student not found, send null
+    return { props: { session, studentId: null } };
+  }
 }
 
 export default Profile;
