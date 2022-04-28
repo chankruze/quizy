@@ -17,7 +17,6 @@ import InvalidQuiz from "../../../components/modules/quiz/InvalidQuiz";
 import { Option, Question, Quiz } from "../../../types";
 import { Student } from "../../../types/student";
 import InvalidStudent from "../../../components/modules/quiz/InvalidStudent";
-import { Submission } from "../../../types/submission";
 
 interface QuizPageProps {
   student: Student;
@@ -35,10 +34,12 @@ const Quiz = ({ student, quiz, alreadyAttempted }: QuizPageProps) => {
     return null;
   }
 
+  // if quiz is invalid
   if (!quiz) {
     return <InvalidQuiz />;
   }
 
+  // if student is invalid
   if (!student) {
     return <InvalidStudent />;
   }
@@ -178,14 +179,18 @@ export async function getServerSideProps(context: NextPageContext) {
     quiz = null;
   }
 
+  // if student and quiz data is available, check if the student has already attempted the quiz
   if (student && quiz) {
     try {
       const { data } = await axios.get(
         `${process.env.NEXT_PUBLIC_API_URL}/submission/quiz/${quizId}/student/${student._id}`,
       );
 
-      if (data) {
+      // if the student has already attempted the quiz, set alreadyAttempted to true
+      if (data.length > 0) {
         alreadyAttempted = true;
+      } else {
+        alreadyAttempted = false;
       }
     } catch (err) {
       alreadyAttempted = false;
