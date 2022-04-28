@@ -6,19 +6,12 @@ Copyright (c) geekofia 2022 and beyond
 */
 
 export enum TAB_TYPE {
-  QUIZY_SUBMISSIONS,
   EDIT_PROFILE,
   BIO_DATA,
+  QUIZY_SUBMISSIONS,
 }
 
 export const tabs = [
-  {
-    id: TAB_TYPE.QUIZY_SUBMISSIONS,
-    name: "Submissions",
-    path: "/",
-    icon: "home",
-    isActive: true,
-  },
   {
     id: TAB_TYPE.EDIT_PROFILE,
     name: "Edit profile",
@@ -29,6 +22,13 @@ export const tabs = [
   {
     id: TAB_TYPE.BIO_DATA,
     name: "Bio data",
+    path: "/",
+    icon: "home",
+    isActive: true,
+  },
+  {
+    id: TAB_TYPE.QUIZY_SUBMISSIONS,
+    name: "Submissions",
     path: "/",
     icon: "home",
     isActive: true,

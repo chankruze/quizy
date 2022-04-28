@@ -5,6 +5,9 @@ Created: Mon Apr 18 2022 21:08:16 GMT+0530 (India Standard Time)
 Copyright (c) geekofia 2022 and beyond
 */
 
+import { Question } from "../types";
+import { Submission } from "../types/submission";
+
 export const capitalize = (s: string) => {
   if (typeof s !== "string") return "";
   return s.charAt(0).toUpperCase() + s.slice(1);
@@ -13,4 +16,22 @@ export const capitalize = (s: string) => {
 export const reloadSession = () => {
   const event = new Event("visibilitychange");
   document.dispatchEvent(event);
+};
+
+export const sliceId = (id: string) => id.slice(id.length - 7);
+
+export const calculateScore = (
+  questions: Array<Question>,
+  submission: Submission,
+) => {
+  return questions.reduce((prev, question: Question) => {
+    if (
+      question.options[parseInt(question.answer as string)].id ===
+      submission.answers[question.id]
+    ) {
+      return prev + 1;
+    }
+
+    return prev;
+  }, 0);
 };

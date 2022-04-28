@@ -9,13 +9,13 @@ import { TAB_TYPE } from "../../../config/tabs";
 import { Tab } from "../../../pages/profile";
 import BioDataTab from "./BioDataTab";
 import EditProfileTab from "./EditProfileTab";
-import QuizySubmissionsTab from "./QuizySubmissionsTab";
+import QuizySubmissionsTab from "./SubmissionsTab";
 
 interface TabProps {
   tab: Tab;
 }
 
-const TabPage: React.FC<TabProps> = ({ tab }) => {
+const TabContainer: React.FC<TabProps> = ({ tab }) => {
   switch (tab.id) {
     case TAB_TYPE.QUIZY_SUBMISSIONS:
       return <QuizySubmissionsTab />;
@@ -27,8 +27,8 @@ const TabPage: React.FC<TabProps> = ({ tab }) => {
       return <BioDataTab />;
 
     default:
-      return <QuizySubmissionsTab />;
+      return <EditProfileTab />;
   }
 };
 
-export default TabPage;
+export default TabContainer;

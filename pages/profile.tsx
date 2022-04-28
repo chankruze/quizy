@@ -5,15 +5,16 @@ Created: Sun Apr 17 2022 14:20:56 GMT+0530 (India Standard Time)
 Copyright (c) geekofia 2022 and beyond
 */
 
+import { NextPageContext } from "next";
+import { createContext, useState } from "react";
 import { useSession, signIn, getSession, signOut } from "next-auth/react";
+import axios from "axios";
 // components
 import Layout from "../components/modules/Layout";
-import { NextPageContext } from "next";
-import { tabs } from "../config/tabs";
-import { createContext, useState } from "react";
 import TabHeader from "../components/modules/profile-tab/TabHeader";
-import TabPage from "../components/modules/profile-tab/ProfileTabPage";
-import axios from "axios";
+import TabContainer from "../components/modules/profile-tab/TabContainer";
+// config
+import { tabs } from "../config/tabs";
 
 export type Tab = {
   id: number;
@@ -77,7 +78,7 @@ const Profile = ({ studentId }: Props) => {
             }}
           >
             <div className="flex-1 flex">
-              <TabPage tab={activeTab} />
+              <TabContainer tab={activeTab} />
             </div>
           </StudentContext.Provider>
         )}
@@ -102,8 +103,6 @@ export async function getServerSideProps(context: NextPageContext) {
     const { data: student } = await axios.get(
       `${process.env.NEXT_PUBLIC_API_URL}/student/email/${session.user?.email}`,
     );
-
-    console.log(student);
 
     return { props: { session, studentId: student._id } };
   } catch (error) {

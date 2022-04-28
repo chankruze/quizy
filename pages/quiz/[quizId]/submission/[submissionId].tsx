@@ -16,6 +16,7 @@ import { Submission } from "../../../../types/submission";
 import { useWindowSize } from "react-use";
 // libs
 import Confetti from "react-confetti";
+import { calculateScore } from "../../../../utils";
 
 interface SubmissionPageProps {
   student: Student;
@@ -35,16 +36,7 @@ const Submission = ({ student, quiz, submission }: SubmissionPageProps) => {
   }
 
   // calculate the score
-  const score = quiz.questions.reduce((prev, question) => {
-    if (
-      question.options[parseInt(question.answer as string)].id ===
-      submission.answers[question.id]
-    ) {
-      return prev + 1;
-    }
-
-    return prev;
-  }, 0);
+  const score = calculateScore(quiz.questions, submission);
 
   return (
     <Layout className="flex flex-col min-h-screen w-full" navbar>
