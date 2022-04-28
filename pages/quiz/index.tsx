@@ -97,7 +97,7 @@ const QuizHome = ({ student }: QuizHomeProps) => {
 
         {/* list all the quizzes of semster and branch only if the student is verified */}
         {!isValidating && student && student.verification === "verified" && (
-          <div>
+          <div className="flex flex-col gap-1">
             {data.quizzes.map((quiz: Quiz) => (
               <QuizCard key={quiz._id} quiz={quiz} />
             ))}

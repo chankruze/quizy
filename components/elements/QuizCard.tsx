@@ -32,8 +32,10 @@ const QuizCard: React.FC<QuizCardProps> = ({ quiz }) => {
       onClick={handleClick}
     >
       {/* date */}
-      <p className="text-gray-800 font-medium flex gap-1  ">
-        <span className="px-2 bg-white rounded-md">{moment(quiz.date).format("DD MMM YYYY")}</span>
+      <p className="text-gray-800 font-medium flex gap-1 text-sm sm:text-base">
+        <span className="px-2 bg-white rounded-md">
+          {moment(quiz.date).format("DD MMM YYYY")}
+        </span>
         <span className="px-2 bg-yellow-300 rounded-md">
           {moment(quiz.date).format("hh:mm A")}
         </span>
