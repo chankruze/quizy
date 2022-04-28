@@ -71,7 +71,7 @@ const NavBar = () => {
                     className="bg-gray-200 py-1 px-3 rounded-md 
                     font-bold font-montserrat text-xl"
                   >
-                    {name.split(" ")[0][0]}
+                    {name.split(" ")[0][0].toUpperCase()}
                   </p>
                 )}
                 {/* if image not found */}
@@ -80,7 +80,7 @@ const NavBar = () => {
                     className="bg-white py-1 px-3 rounded-md 
                     font-bold font-montserrat text-xl shadow-md"
                   >
-                    {email?.charAt(0)}
+                    {email?.charAt(0).toUpperCase()}
                   </p>
                 )}
               </div>
