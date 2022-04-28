@@ -13,6 +13,26 @@ interface Props {
 
 const InvalidStudent = ({ template }: Props) => {
   switch (template) {
+    case "ALREADY_ATTEMPTED":
+      return (
+        <div className="text-center p-3">
+          <p className="p-4 text-center text-base text-gray-700 font-nunito sm:mt-4 sm:text-xl lg:text-lg xl:text-xl">
+            You have already attempted this quiz!
+          </p>
+          <div className="mt-2 md:inline-block">
+            <Link href="/quiz" passHref>
+              <a
+                className="w-full md:w-auto flex items-center justify-center text-base text-white
+                leading-6 font-medium rounded-md bg-blue-600 shadow-md hover:bg-blue-600/80 duration-150 
+                ease-in-out cursor-pointer py-3 px-8 md:py-4 md:text-lg md:px-10 mx-auto lg:mx-0"
+              >
+                Go back
+              </a>
+            </Link>
+          </div>
+        </div>
+      );
+
     case "NOT_APPLIED":
       return (
         <div className="text-center bg-gray-200 p-3 rounded-md">

@@ -17,13 +17,15 @@ import InvalidQuiz from "../../../components/modules/quiz/InvalidQuiz";
 import { Option, Question, Quiz } from "../../../types";
 import { Student } from "../../../types/student";
 import InvalidStudent from "../../../components/modules/quiz/InvalidStudent";
+import { Submission } from "../../../types/submission";
 
 interface QuizPageProps {
   student: Student;
   quiz: Quiz;
+  alreadyAttempted: boolean;
 }
 
-const Quiz = ({ student, quiz }: QuizPageProps) => {
+const Quiz = ({ student, quiz, alreadyAttempted }: QuizPageProps) => {
   const { data: session } = useSession();
 
   if (typeof window === "undefined") return null;
@@ -41,12 +43,13 @@ const Quiz = ({ student, quiz }: QuizPageProps) => {
     return <InvalidStudent />;
   }
 
-  // check if the student is verified
-  if (student.verification !== "verified") {
-    return <InvalidStudent template="NOT_VERIFIED" />;
+  // check if the student is eligible to attempt the quiz
+  // 1. student is not already attempted the quiz
+  if (student && alreadyAttempted) {
+    return <InvalidStudent template="ALREADY_ATTEMPTED" />;
   }
-
-  // check if the student is eligible
+  // 2. student belongs to the same branch and semester as the quiz
+  // TODO: check if the student belongs to the same branch (array) and semester as the quiz
   if (
     student.bioData.semester !== quiz?.semester &&
     student.bioData.branch !== quiz?.branch
@@ -152,6 +155,7 @@ export async function getServerSideProps(context: NextPageContext) {
   const quizId = context.query.quizId;
   let student: Student | null = null;
   let quiz: Quiz | null = null;
+  let alreadyAttempted = true;
 
   // get student data
   try {
@@ -174,7 +178,23 @@ export async function getServerSideProps(context: NextPageContext) {
     quiz = null;
   }
 
-  return { props: { session, student, quiz } };
+  if (student && quiz) {
+    try {
+      const { data } = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/submission/quiz/${quizId}/student/${student._id}`,
+      );
+
+      if (data) {
+        alreadyAttempted = true;
+      }
+    } catch (err) {
+      alreadyAttempted = false;
+    }
+  }
+
+  return {
+    props: { session, student, quiz, alreadyAttempted },
+  };
 }
 
 export default Quiz;
