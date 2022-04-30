@@ -10,7 +10,7 @@ import { NextPageContext } from "next";
 import { getSession, signIn, useSession } from "next-auth/react";
 import Link from "next/link";
 import useSWR from "swr";
-import Spinner from "../../components/formik-controls/Spinner";
+import Spinner from "../../components/elements/Spinner";
 import Layout from "../../components/modules/Layout";
 import QuizCard from "../../components/elements/QuizCard";
 import { Quiz } from "../../types";
@@ -38,8 +38,6 @@ const QuizHome = ({ student }: QuizHomeProps) => {
     signIn();
     return null;
   }
-
-  const xyz = "pending";
 
   return (
     <Layout className="flex flex-col min-h-screen w-full" navbar>

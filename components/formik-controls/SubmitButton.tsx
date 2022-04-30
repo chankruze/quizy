@@ -5,7 +5,7 @@ Created: Thu Apr 14 2022 21:23:19 GMT+0530 (India Standard Time)
 Copyright (c) geekofia 2022 and beyond
 */
 
-import Spinner from "./Spinner";
+import Spinner from "../elements/Spinner";
 
 interface Props {
   label: string;
