@@ -214,6 +214,7 @@ export async function getServerSideProps(context: NextPageContext) {
     // get the student profile
     const { data: student } = await axios.get(
       `${process.env.NEXT_PUBLIC_API_URL}/student/email/${session.user?.email}`,
+      {timeout: 4000}
     );
 
     return { props: { session, student } };

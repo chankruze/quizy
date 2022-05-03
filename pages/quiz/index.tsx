@@ -25,7 +25,7 @@ const QuizHome = ({ student }: QuizHomeProps) => {
   const { data: session } = useSession();
 
   // get all the quizzes of semster and branch
-  const { data, isValidating } = useSWR(
+  const { data: quizzes, isValidating } = useSWR(
     session && student
       ? `${process.env.NEXT_PUBLIC_API_URL}/quiz/all/semester/${student.bioData.semester}/branch/${student.bioData.branch}`
       : null,
@@ -96,7 +96,7 @@ const QuizHome = ({ student }: QuizHomeProps) => {
         {/* list all the quizzes of semster and branch only if the student is verified */}
         {!isValidating && student && student.verification === "verified" && (
           <div className="flex flex-col gap-1">
-            {data.quizzes.map((quiz: Quiz) => (
+            {quizzes.map((quiz: Quiz) => (
               <QuizCard key={quiz._id} quiz={quiz} />
             ))}
           </div>
