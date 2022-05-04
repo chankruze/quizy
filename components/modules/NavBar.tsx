@@ -16,7 +16,8 @@ import NavLink from "../elements/NavLink";
 import { config } from "../../config";
 import { navbarLinks } from "../../config/navbarLinks";
 // icons
-import { GoBeaker, GoFlame, GoSignIn } from "react-icons/go";
+import { GoSignIn } from "react-icons/go";
+import { SiVercel } from "react-icons/si";
 
 const NavBar = () => {
   const { data: session, status } = useSession();
@@ -31,12 +32,12 @@ const NavBar = () => {
   }
 
   return (
-    <div className="w-full flex justify-between p-2 sm:px-4 sm:border-b border-gray-100">
+    <div className="w-full flex justify-between p-2 sm:px-4">
       <div className="flex gap-1">
         <Link href="/" passHref>
-          <p className="font-bold font-poppins text-3xl flex items-center cursor-pointer">
-            <GoFlame size={32} color="#F07548" />
-            <a className="ml-1 text-green-500">{config.APP_NAME}</a>
+          <p className="flex items-center font-bold font-poppins text-3xl text-blue-500 cursor-pointer">
+            <SiVercel size={32} />
+            <a className="ml-1">{config.APP_NAME}</a>
           </p>
         </Link>
         <p className="self-end text-xs text-yellow-500 font-nunito italic hidden sm:block">
@@ -46,14 +47,14 @@ const NavBar = () => {
       </div>
 
       {/* mobile layout */}
-      <div className="flex sm:hidden justify-center items-center">
+      <div className="flex sm:hidden gap-3 justify-center items-center">
         {status === "authenticated" ? (
           <>
-            <Link href="/quiz" passHref>
-              <a className="mr-4 text-blue-500">
-                <GoBeaker size={32} />
-              </a>
-            </Link>
+            <div className="flex justify-center items-center">
+              {navbarLinks.map((link) => (
+                <NavLink key={link.name} link={link} showIcon />
+              ))}
+            </div>
             <Link href="/profile" passHref>
               <div className="h-8 w-8 relative flex justify-center items-center">
                 {/* if user has image */}
@@ -67,19 +68,13 @@ const NavBar = () => {
                 )}
                 {/* if image not found */}
                 {!image && name && (
-                  <p
-                    className="bg-gray-200 py-1 px-3 rounded-md 
-                    font-bold font-montserrat text-xl"
-                  >
+                  <p className="bg-gray-200 py-1 px-3 rounded-md font-bold font-montserrat text-xl">
                     {name.split(" ")[0][0].toUpperCase()}
                   </p>
                 )}
                 {/* if image not found */}
                 {!image && !name && (
-                  <p
-                    className="bg-white py-1 px-3 rounded-md 
-                    font-bold font-montserrat text-xl shadow-md"
-                  >
+                  <p className="bg-white py-1 px-3 rounded-md font-bold font-montserrat text-xl border-2 border-blue-200">
                     {email?.charAt(0).toUpperCase()}
                   </p>
                 )}
@@ -96,11 +91,11 @@ const NavBar = () => {
       </div>
 
       {/* non-mobile layout */}
-      <div className="hidden sm:flex gap-1 sm:gap-2 flex-wrap">
+      <div className="hidden sm:flex gap-1 sm:gap-3 flex-wrap">
         {/* navbar links */}
-        <div className="flex flex-wrap">
+        <div className="flex flex-wrap justify-center items-center">
           {navbarLinks.map((link) => (
-            <NavLink key={link.name} link={link} />
+            <NavLink key={link.name} link={link} showText />
           ))}
         </div>
         {/* profile button */}
