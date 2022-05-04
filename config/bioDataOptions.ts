@@ -5,7 +5,7 @@ Created: Fri Apr 15 2022 08:42:43 GMT+0530 (India Standard Time)
 Copyright (c) geekofia 2022 and beyond
 */
 
-export const semesters = [
+export const semesterOptions = [
   {
     label: "-- Select Semester --",
     value: "",
@@ -40,7 +40,7 @@ export const semesters = [
   },
 ];
 
-export const branches = [
+export const branchOptions = [
   {
     label: "-- Select Branch --",
     value: "",
@@ -68,5 +68,47 @@ export const branches = [
   {
     label: "Information Technology",
     value: "IT",
+  },
+];
+
+export const genderOptions = [
+  {
+    label: "-- Select Gender --",
+    value: "",
+  },
+  {
+    label: "Male",
+    value: "male",
+  },
+  {
+    label: "Female",
+    value: "female",
+  },
+  {
+    label: "Other",
+    value: "other",
+  },
+];
+
+export const casteOptions = [
+  {
+    label: "-- Select Caste --",
+    value: "",
+  },
+  {
+    label: "OBC",
+    value: "obc",
+  },
+  {
+    label: "General",
+    value: "gen",
+  },
+  {
+    label: "SC",
+    value: "st",
+  },
+  {
+    label: "ST",
+    value: "sc",
   },
 ];

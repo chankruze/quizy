@@ -5,68 +5,37 @@ Created: Sat Apr 16 2022 22:33:24 GMT+0530 (India Standard Time)
 Copyright (c) geekofia 2022 and beyond
 */
 
+// next
 import Router from "next/router";
-// swr & fetcher
+// libs
+import axios from "axios";
 import { useSession, signIn, getSession } from "next-auth/react";
 import { Formik, Form, FormikValues } from "formik";
-import * as Yup from "yup";
+// components
 import Layout from "../components/modules/Layout";
-import { User } from "../types/user";
 import Input from "../components/formik-controls/Input";
 import Select from "../components/formik-controls/Select";
-import { branches, semesters } from "../config/academicData";
 import SubmitButton from "../components/formik-controls/SubmitButton";
-import axios from "axios";
-import { BioData, Student } from "../types/student";
 import DatePicker from "../components/formik-controls/DatePicker";
+import Divider from "../components/elements/Divider";
 // react toastify
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Divider from "../components/elements/Divider";
-import { NextPageContext } from "next";
+// icons
 import { GoTelescope } from "react-icons/go";
-
-const genderOptions = [
-  {
-    label: "-- Select Gender --",
-    value: "",
-  },
-  {
-    label: "Male",
-    value: "male",
-  },
-  {
-    label: "Female",
-    value: "female",
-  },
-  {
-    label: "Other",
-    value: "other",
-  },
-];
-
-const casteOptions = [
-  {
-    label: "-- Select Caste --",
-    value: "",
-  },
-  {
-    label: "OBC",
-    value: "obc",
-  },
-  {
-    label: "General",
-    value: "gen",
-  },
-  {
-    label: "SC",
-    value: "st",
-  },
-  {
-    label: "ST",
-    value: "sc",
-  },
-];
+// yup validation schema
+import { validationSchema } from "../utils/bioDataValidation";
+// data/options
+import {
+  branchOptions,
+  casteOptions,
+  genderOptions,
+  semesterOptions,
+} from "../config/bioDataOptions";
+// types
+import { NextPageContext } from "next";
+import { BioData, Student } from "../types/student";
+import { User } from "../types/user";
 
 interface Props {
   student: Student | null;
@@ -117,39 +86,8 @@ const BioData = ({ student }: Props) => {
         fatherMob: "",
       };
 
-  // validation schema
-  const validationSchema = Yup.object({
-    // name: Yup.string().required("Name is required"),
-    // photo: Yup.string().required("Image is required"),
-    fatherName: Yup.string().required("Father's name is required"),
-    branch: Yup.string().required("Branch is required"),
-    semester: Yup.string().required("Semester is required"),
-    regdNo: Yup.string().matches(
-      /^[FL]\d{11}$/gm,
-      "Registration no. must be in the format FXXXXXXXXXX or LXXXXXXXXXX",
-    ),
-    gender: Yup.string().required("Gender is required"),
-    dob: Yup.string().required("DOB is required"),
-    caste: Yup.string().required("Caste is required"),
-    mob: Yup.string()
-      .matches(
-        /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/gm,
-        "Invalid mobile number",
-      )
-      .required("Mobile number is required"),
-    fatherMob: Yup.string()
-      .matches(
-        /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/gm,
-        "Invalid mobile number",
-      )
-      .required("Mobile number is required"),
-  });
-
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onSubmit = (values: FormikValues, formikBag: any) => {
-    // TODO: if verified, modified data should be sent in the PUT request
-    // TODO: if not verified, modified data should be sent in the POST request
-
     switch (verification) {
       case "verified":
       case "rejected":
@@ -308,14 +246,14 @@ const BioData = ({ student }: Props) => {
                     <Select
                       id="semester"
                       name="semester"
-                      options={semesters}
+                      options={semesterOptions}
                       label="Semester"
                     />
                     {/* 6. (select) branch */}
                     <Select
                       id="branch"
                       name="branch"
-                      options={branches}
+                      options={branchOptions}
                       label="Branch"
                     />
                   </div>
