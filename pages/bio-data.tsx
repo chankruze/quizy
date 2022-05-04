@@ -125,8 +125,8 @@ const BioData = ({ student }: Props) => {
     branch: Yup.string().required("Branch is required"),
     semester: Yup.string().required("Semester is required"),
     regdNo: Yup.string().matches(
-      /^F\d{11}$/gm,
-      "Registration no. must be in the format FXXXXXXXXXX",
+      /^[FL]\d{11}$/gm,
+      "Registration no. must be in the format FXXXXXXXXXX or LXXXXXXXXXX",
     ),
     gender: Yup.string().required("Gender is required"),
     dob: Yup.string().required("DOB is required"),
