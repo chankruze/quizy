@@ -32,7 +32,7 @@ const NavBar = () => {
   }
 
   return (
-    <div className="w-full flex justify-between p-2 sm:px-4">
+    <div className="w-full flex justify-between items-center p-2 sm:px-4">
       <div className="flex gap-1">
         <Link href="/" passHref>
           <p className="flex items-center font-bold font-poppins text-3xl text-blue-500 cursor-pointer">
@@ -46,11 +46,18 @@ const NavBar = () => {
         </p>
       </div>
 
+      {/* navbar links */}
+      <div className="hidden sm:flex flex-wrap gap-12 justify-center items-center">
+        {navbarLinks.map((link) => (
+          <NavLink key={link.name} link={link} showText />
+        ))}
+      </div>
+
       {/* mobile layout */}
-      <div className="flex sm:hidden gap-3 justify-center items-center">
+      <div className="flex sm:hidden gap-6 justify-center items-center">
         {status === "authenticated" ? (
           <>
-            <div className="flex justify-center items-center">
+            <div className="flex justify-center items-center gap-4">
               {navbarLinks.map((link) => (
                 <NavLink key={link.name} link={link} showIcon />
               ))}
@@ -92,12 +99,6 @@ const NavBar = () => {
 
       {/* non-mobile layout */}
       <div className="hidden sm:flex gap-1 sm:gap-3 flex-wrap">
-        {/* navbar links */}
-        <div className="flex flex-wrap justify-center items-center">
-          {navbarLinks.map((link) => (
-            <NavLink key={link.name} link={link} showText />
-          ))}
-        </div>
         {/* profile button */}
         <div>
           {status === "authenticated" ? (

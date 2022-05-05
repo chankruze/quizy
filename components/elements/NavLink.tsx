@@ -25,12 +25,14 @@ const NavLink: React.FC<Props> = ({ link, showIcon, showText }) => {
   return (
     <Link href={link.url} key={link.name}>
       <a
-        className={`flex items-center justify-center p-2 sm:p-3 font-medium border-b-2 border-transparent
-        hover:bg-blue-50/50 hover:border-b-2 hover:border-blue-500 
+        className={`flex items-center justify-center font-medium border-b-2 
+        border-transparent hover:border-b-2 hover:border-blue-500 
         ${isActive ? "text-blue-500" : "text-gray-400"}`}
       >
         {showIcon && <link.icon size={28} />}
-        {showText && <p className="pl-1 uppercase">{link.name}</p>}
+        {showText && (
+          <p className="pl-1 capitalize font-poppins">{link.name}</p>
+        )}
       </a>
     </Link>
   );
