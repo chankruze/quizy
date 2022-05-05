@@ -6,7 +6,7 @@ Copyright (c) geekofia 2022 and beyond
 */
 
 import Link from "next/link";
-import Router from "next/router";
+import { useRouter } from "next/router";
 import { IconType } from "react-icons";
 
 interface Props {
@@ -20,7 +20,7 @@ interface Props {
 }
 
 const NavLink: React.FC<Props> = ({ link, showIcon, showText }) => {
-  const isActive = Router.pathname === link.url;
+  const isActive = useRouter().pathname === link.url;
 
   return (
     <Link href={link.url} key={link.name}>
