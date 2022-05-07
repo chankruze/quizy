@@ -97,18 +97,18 @@ export const casteOptions = [
   },
   {
     label: "OBC",
-    value: "obc",
+    value: "OBC",
   },
   {
     label: "General",
-    value: "gen",
+    value: "GEN",
   },
   {
     label: "SC",
-    value: "st",
+    value: "SC",
   },
   {
     label: "ST",
-    value: "sc",
+    value: "ST",
   },
 ];
