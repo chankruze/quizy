@@ -44,5 +44,6 @@ export const validationSchema = Yup.object({
     )
     .trim("Can't include leading and/or trailing spaces")
     .strict(true)
+    .not([Yup.ref("mob")], "Mobile numbers must be different")
     .required("Mobile number is required"),
 });
