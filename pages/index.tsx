@@ -5,6 +5,7 @@ import Link from "next/link";
 import axios from "axios";
 import { Student } from "../types/student";
 import Image from "next/image";
+import LinkButton from "../components/elements/LinkButton";
 
 interface Props {
   student: Student;
@@ -35,8 +36,8 @@ const Home = ({ student }: Props) => {
                 </p>
                 <button
                   className="mt-4 w-full md:w-auto flex items-center justify-center text-base 
-                leading-6 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 duration-150 ease-in-out cursor-pointer 
-                py-3 px-8 md:py-4 md:text-lg md:px-10 mx-auto lg:mx-0"
+                  leading-6 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 duration-150 ease-in-out cursor-pointer 
+                  py-3 px-8 md:py-4 md:text-lg md:px-10 mx-auto lg:mx-0"
                   onClick={() => signIn()}
                 >
                   Get Started
@@ -61,15 +62,7 @@ const Home = ({ student }: Props) => {
                   need your email to signin and fill your bio data 😉
                 </p>
                 <div className="mt-4 md:inline-block">
-                  <Link href="/bio-data" passHref>
-                    <a
-                      className="w-full md:w-auto flex items-center justify-center text-base text-white
-                      leading-6 font-medium rounded-md bg-blue-600 shadow-md hover:bg-blue-600/80 duration-150 
-                      ease-in-out cursor-pointer py-3 px-8 md:py-4 md:text-lg md:px-10 mx-auto lg:mx-0"
-                    >
-                      Fill Biodata
-                    </a>
-                  </Link>
+                  <LinkButton href="/bio-data" text="Fill Biodata" />
                 </div>
               </>
             )}
@@ -93,15 +86,7 @@ const Home = ({ student }: Props) => {
                   Your bio data verification is still pending 🙄
                 </p>
                 <div className="md:inline-block mt-4">
-                  <Link href="/bio-data" passHref>
-                    <a
-                      className="w-full md:w-auto flex items-center justify-center text-base 
-                      leading-6 font-medium rounded-md bg-blue-600 text-white shadow-md hover:bg-gray-100 duration-150 
-                      ease-in-out cursor-pointer py-3 px-8 md:py-4 md:text-lg md:px-10 mx-auto lg:mx-0"
-                    >
-                      Check Status
-                    </a>
-                  </Link>
+                  <LinkButton href="/bio-data" text="Check Status" />
                 </div>
               </>
             )}
@@ -127,26 +112,14 @@ const Home = ({ student }: Props) => {
                 </p>
                 <div className="mt-4 flex gap-4 flex-wrap justify-center lg:justify-start">
                   <div className="md:inline-block">
-                    <Link href="/quiz" passHref>
-                      <a
-                        className="w-full md:w-auto flex items-center justify-center text-base 
-                      leading-6 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 duration-150 ease-in-out cursor-pointer 
-                      py-3 px-8 md:py-4 md:text-lg md:px-10 mx-auto lg:mx-0"
-                      >
-                        Attend Quizzes
-                      </a>
-                    </Link>
+                    <LinkButton href="/quiz" text="Attend Quizzes" />
                   </div>
                   <div className="md:inline-block">
-                    <Link href="/bio-data" passHref>
-                      <a
-                        className="w-full md:w-auto flex items-center justify-center text-base 
-                      leading-6 font-medium rounded-md bg-white shadow-md hover:bg-gray-100 duration-150 
-                      ease-in-out cursor-pointer py-3 px-8 md:py-4 md:text-lg md:px-10 mx-auto lg:mx-0"
-                      >
-                        Update Bio Data
-                      </a>
-                    </Link>
+                    <LinkButton
+                      href="/bio-data"
+                      text="Update Biodata"
+                      color="bg-white shadow-md hover:bg-gray-100"
+                    />
                   </div>
                 </div>
               </>
@@ -172,15 +145,7 @@ const Home = ({ student }: Props) => {
                   or contact college for more information.
                 </p>
                 <div className="md:inline-block mt-4">
-                  <Link href="/bio-data" passHref>
-                    <a
-                      className="w-full md:w-auto flex items-center justify-center text-base 
-                      leading-6 font-medium rounded-md bg-blue-600 text-white shadow-md hover:bg-gray-100 duration-150 
-                      ease-in-out cursor-pointer py-3 px-8 md:py-4 md:text-lg md:px-10 mx-auto lg:mx-0"
-                    >
-                      Update Biodata
-                    </a>
-                  </Link>
+                  <LinkButton href="/bio-data" text="Update Biodata" />
                 </div>
               </>
             )}
@@ -214,7 +179,7 @@ export async function getServerSideProps(context: NextPageContext) {
     // get the student profile
     const { data: student } = await axios.get(
       `${process.env.NEXT_PUBLIC_API_URL}/student/email/${session.user?.email}`,
-      {timeout: 4000}
+      { timeout: 4000 },
     );
 
     return { props: { session, student } };
