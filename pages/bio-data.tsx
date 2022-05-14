@@ -205,7 +205,8 @@ const BioData = ({ student }: Props) => {
                     name="name"
                     label="Name"
                     placeholder="Enter your name"
-                    disabled={name ? true : false}
+                    // workaround for #23
+                    disabled={name === student?.bioData.name}
                     disabledMessage="(edit in profile)"
                   />
                   {/* 2. email */}
