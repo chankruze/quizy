@@ -6,17 +6,17 @@ Copyright (c) geekofia 2022 and beyond
 */
 
 import Router from "next/router";
-import axios from "axios";
-import { Form, Formik, Field, FormikValues } from "formik";
-import { NextPageContext } from "next";
 import { getSession, signIn, useSession } from "next-auth/react";
-import Label from "../../../components/formik-controls/Label";
-import SubmitButton from "../../../components/formik-controls/SubmitButton";
+import axios from "axios";
 import Layout from "../../../components/modules/Layout";
 import InvalidQuiz from "../../../components/modules/quiz/InvalidQuiz";
-import { Option, Question, Quiz } from "../../../types";
-import { Student } from "../../../types/student";
 import InvalidStudent from "../../../components/modules/quiz/InvalidStudent";
+import QuestionView from "../../../components/modules/quiz/QuestionView";
+// types
+import { NextPageContext } from "next";
+import { Quiz } from "../../../types";
+import { Student } from "../../../types/student";
+import { Answer } from "../../../types/submission";
 
 interface QuizPageProps {
   student: Student;
@@ -58,27 +58,17 @@ const Quiz = ({ student, quiz, alreadyAttempted }: QuizPageProps) => {
     return <InvalidStudent template="NOT_ELIGIBLE" />;
   }
 
-  const initialValues = {
-    ...Object.fromEntries(
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      //@ts-ignore
-      quiz.questions.map((question: Question) => [question.id, ""]),
-    ),
-  };
-
-  const onSubmit = (values: FormikValues, formikBag: any) => {
+  const submit = (answer: Answer) => {
     // send the answers to the server
     axios
       .post(`${process.env.NEXT_PUBLIC_API_URL}/submission/quiz/${quiz._id}`, {
-        answers: values,
+        answer: answer,
         studentId: student._id,
         quizId: quiz._id,
         date: new Date(),
       })
       .then((res) => {
         if (res.status === 201) {
-          formikBag.setSubmitting(false);
-          formikBag.resetForm();
           Router.push(`/quiz/${quiz._id}/submission/${res.data.submissionId}`);
         }
       })
@@ -88,54 +78,15 @@ const Quiz = ({ student, quiz, alreadyAttempted }: QuizPageProps) => {
   };
 
   return (
-    <Layout className="flex flex-col min-h-screen w-full" navbar>
-      <main className="flex flex-col w-full max-w-6xl m-auto flex-1 py-2 px-2 sm:px-4">
-        {/* Render quiz to attempt  */}
-        <Formik initialValues={initialValues} onSubmit={onSubmit}>
-          {(formikHelpers) => (
-            <Form>
-              {quiz.questions.map((question: Question, qIdx: number) => (
-                <Field name={question.id} key={question.id}>
-                  {({ field }: { field: any }) => (
-                    <div>
-                      <div className="py-2">
-                        <Label
-                          value={`${qIdx + 1}. ${question.title}`}
-                          htmlFor={question.id}
-                        />
-                      </div>
-                      {question.options.map((option: Option) => (
-                        <div
-                          key={option.id}
-                          className="flex items-center py-2 px-4"
-                        >
-                          <Field
-                            {...field}
-                            type="radio"
-                            name={question.id}
-                            value={option.id}
-                            className="h-6 w-6"
-                          />
-                          <p className="pl-2 font-roboto">{option.value}</p>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </Field>
-              ))}
-              <div className="mt-8">
-                <SubmitButton
-                  label="submit"
-                  isDisabled={
-                    !(formikHelpers.isValid && formikHelpers.dirty) ||
-                    formikHelpers.isSubmitting
-                  }
-                  isSubmitting={formikHelpers.isSubmitting}
-                />
-              </div>
-            </Form>
-          )}
-        </Formik>
+    <Layout className="h-screen w-full bg-gray-100">
+      <main className="h-full bg-white flex flex-col w-full max-w-6xl m-auto">
+        {/* header */}
+        <div className="h-16 flex items-center justify-between p-3 sm:px-3 bg-gray-800">
+          {/* quiz title */}
+          <p className="text-gray-300 font-poppins sm:text-xl">{quiz.title}</p>
+        </div>
+        {/* question view */}
+        <QuestionView questions={quiz.questions} submit={submit} />
       </main>
     </Layout>
   );

@@ -27,7 +27,7 @@ export const calculateScore = (
   return questions.reduce((prev, question: Question) => {
     if (
       question.options[parseInt(question.answer as string)].id ===
-      submission.answers[question.id]
+      submission.answer[question.id]
     ) {
       return prev + 1;
     }
