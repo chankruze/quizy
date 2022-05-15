@@ -40,14 +40,14 @@ const NavBar = () => {
             <a className="ml-1">{config.APP_NAME}</a>
           </p>
         </Link>
-        <p className="self-end text-xs text-yellow-500 font-nunito italic hidden sm:block">
+        {/* <p className="self-end text-xs text-yellow-500 font-nunito italic hidden sm:block">
           <span>v</span>
           {config.APP_VERSION}
-        </p>
+        </p> */}
       </div>
 
       {/* navbar links */}
-      <div className="hidden sm:flex flex-wrap gap-12 justify-center items-center">
+      <div className="hidden sm:flex flex-wrap gap-10 justify-center items-center">
         {navbarLinks.map((link) => (
           <NavLink key={link.name} link={link} showText />
         ))}

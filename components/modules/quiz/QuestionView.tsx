@@ -6,6 +6,7 @@ Copyright (c) geekofia 2022 and beyond
 */
 import { useEffect, useState } from "react";
 import Option from "./Option";
+import NextButton from "./NextButton";
 import { config } from "../../../config";
 import { Question } from "../../../types";
 import { Answer } from "../../../types/submission";
@@ -21,6 +22,7 @@ const QuestionView: React.FC<QuestionViewProps> = ({ questions, submit }) => {
   const [activeQuestion, setActiveQuestion] = useState(questions[0]);
   const [activeQuestionAnswer, setActiveQuestionAnswer] = useState("");
   const [answer, setAnswer] = useState<Answer>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
   // timer
   const [timer, setTimer] = useState(config.DEFAULT_TIMER);
 
@@ -53,6 +55,7 @@ const QuestionView: React.FC<QuestionViewProps> = ({ questions, submit }) => {
     // 2.  move to result view
     if (timer === 0 && activeQuestionIndex === questions.length - 1) {
       clearInterval(interval);
+      setIsSubmitting(true);
       submit(answer);
       return;
     }
@@ -105,22 +108,20 @@ const QuestionView: React.FC<QuestionViewProps> = ({ questions, submit }) => {
         </div>
       </div>
       {/* render the next button only the next question is available */}
-      {activeQuestionIndex < questions.length - 1 ? (
-        <div
-          className="h-16 bg-blue-600 text-white border-t 
-          flex items-center justify-center cursor-pointer text-xl hover:bg-blue-600/80 duration-150"
-          onClick={nextQuestion}
-        >
-          <p className="uppercase text-sm">next</p>
-        </div>
-      ) : (
-        <div
-          className="h-16 bg-blue-600 text-white border-t tracking-wider
-            flex items-center justify-center cursor-pointer text-xl hover:bg-blue-600/80 duration-150"
-          onClick={() => submit(answer)}
-        >
-          <p className="uppercase text-sm">submit</p>
-        </div>
+      {activeQuestionIndex < questions.length - 1 && (
+        <NextButton text="next" onClick={nextQuestion} />
+      )}
+      {/* render the submit button only when the last question is available */}
+      {activeQuestionIndex === questions.length - 1 && (
+        <NextButton
+          text="submit"
+          isSubmitting={isSubmitting}
+          style="text-white bg-green-600 hover:bg-green-500"
+          onClick={() => {
+            setIsSubmitting(true);
+            submit(answer);
+          }}
+        />
       )}
     </div>
   );
