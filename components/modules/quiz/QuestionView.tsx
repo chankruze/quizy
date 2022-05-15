@@ -5,6 +5,7 @@ Created: Sat May 14 2022 18:57:26 GMT+0530 (India Standard Time)
 Copyright (c) geekofia 2022 and beyond
 */
 import { useEffect, useState } from "react";
+import Option from "./Option";
 import { config } from "../../../config";
 import { Question } from "../../../types";
 import { Answer } from "../../../types/submission";
@@ -82,29 +83,24 @@ const QuestionView: React.FC<QuestionViewProps> = ({ questions, submit }) => {
           >
             {timer}
           </p>
-          <p className="font-nunito text-sm">seconds</p>
+          <p className="font-nunito text-sm ml-1">seconds</p>
         </div>
       </div>
       {/* render active question */}
-      <div className="flex-1 flex flex-col py-2 px-3 ">
+      <div className="flex-1 flex flex-col py-2 px-3">
         {/* question */}
         <p className="text-xl font-roboto font-bold sm:p-3">
           {activeQuestion.title}
         </p>
         {/* answer */}
-        <div className="pt-3 sm:pt-0 flex flex-col justify-evenly">
+        <div className="pt-3 md:px-3 flex flex-col md:grid md:grid-cols-2 justify-evenly gap-2">
           {activeQuestion.options.map((option) => (
-            <div key={option.id} className="flex items-center py-3 sm:p-3">
-              <input
-                key={option.id}
-                type="radio"
-                name={activeQuestion.id}
-                value={option.id}
-                onChange={(e) => setActiveQuestionAnswer(e.target.value)}
-                className="h-6 w-6"
-              />
-              <p className="pl-2 font-roboto">{option.value}</p>
-            </div>
+            <Option
+              key={option.id}
+              option={option}
+              onClick={setActiveQuestionAnswer}
+              isSelected={activeQuestionAnswer === option.id}
+            />
           ))}
         </div>
       </div>
