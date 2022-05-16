@@ -39,12 +39,12 @@ const QuizCard: React.FC<QuizCardProps> = ({ quiz }) => {
           {/* start date */}
           <Badge bgColor="bg-green-200">
             <FcCalendar size={24} />
-            {moment(quiz.startDate).format("MM-DD-YYYY, hh:mm A")}
+            {moment(quiz.startDate).format("DD-MM-YYYY, hh:mm A")}
           </Badge>
           {/* end date  */}
           <Badge bgColor="bg-red-200">
             <FcCalendar size={24} />
-            {moment(quiz.endDate).format("MM-DD-YYYY, hh:mm A")}
+            {moment(quiz.endDate).format("DD-MM-YYYY, hh:mm A")}
           </Badge>
         </div>
         {/* badge */}
