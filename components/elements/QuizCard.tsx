@@ -8,38 +8,66 @@ Copyright (c) geekofia 2022 and beyond
 import Router from "next/router";
 import React from "react";
 import moment from "moment";
+import Badge from "./Badge";
+import { FcCalendar } from "react-icons/fc";
 import { Quiz } from "../../types";
 
 interface QuizCardProps {
   quiz: Quiz;
 }
 
-// _id: string;
-// title: string;
-// description: string;
-// branch: string;
-// semester: string;
-// date: string;
-// questions: Array<Question>;
-
 const QuizCard: React.FC<QuizCardProps> = ({ quiz }) => {
+  const isExpired = moment(quiz.endDate).isBefore(moment());
+  const isUpcoming = moment(quiz.startDate).isAfter(moment());
+  const isOngoing = moment(moment()).isBetween(
+    moment(quiz.startDate),
+    moment(quiz.endDate),
+  );
+
   const handleClick = () => Router.push(`/quiz/${quiz._id}`);
 
   return (
     <div
-      className="p-4 w-full rounded-md cursor-pointer border shadow-md
-      bg-blue-600 hover:bg-blue-600/80 duration-100 ease-in-out"
+      className="p-4 w-full rounded-md cursor-pointer shadow-md 
+      bg-gradient-to-tr from-blue-600 to-indigo-600 duration-150 ease-in-out"
       onClick={handleClick}
     >
-      {/* date */}
-      <p className="text-gray-800 font-medium flex gap-1 text-sm sm:text-base">
-        <span className="px-2 bg-white rounded-md">
-          {moment(quiz.date).format("DD MMM YYYY")}
-        </span>
-        <span className="px-2 bg-yellow-300 rounded-md">
-          {moment(quiz.date).format("hh:mm A")}
-        </span>
-      </p>
+      {/* header */}
+      <div className="flex items-center justify-between">
+        {/* date */}
+        <div className="flex items-center gap-2">
+          {/* start date */}
+          <Badge bgColor="bg-green-200">
+            <FcCalendar size={24} />
+            {moment(quiz.startDate).format("MM-DD-YYYY, hh:mm A")}
+          </Badge>
+          {/* end date  */}
+          <Badge bgColor="bg-red-200">
+            <FcCalendar size={24} />
+            {moment(quiz.endDate).format("MM-DD-YYYY, hh:mm A")}
+          </Badge>
+        </div>
+        {/* badge */}
+        <div className="flex items-center">
+          {/* status */}
+          {isExpired && (
+            <Badge bgColor="bg-red-500" color="text-white" uppercase>
+              expired
+            </Badge>
+          )}
+          {isUpcoming && (
+            <Badge bgColor="bg-blue-500" color="text-white" uppercase>
+              upcoming
+            </Badge>
+          )}
+          {isOngoing && (
+            <Badge bgColor="bg-green-500" color="text-white" uppercase>
+              ongoing
+            </Badge>
+          )}
+        </div>
+      </div>
+      {/* title */}
       <p className="py-2 sm:text-xl font-poppins text-white">{quiz.title}</p>
     </div>
   );

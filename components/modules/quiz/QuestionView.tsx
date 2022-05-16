@@ -8,11 +8,11 @@ import { useEffect, useState } from "react";
 import Option from "./Option";
 import NextButton from "./NextButton";
 import { config } from "../../../config";
-import { Question } from "../../../types";
+import { MinifiedQuestion } from "../../../types";
 import { Answer } from "../../../types/submission";
 
 interface QuestionViewProps {
-  questions: Question[];
+  questions: MinifiedQuestion[];
   submit: (answer: Answer) => void;
 }
 

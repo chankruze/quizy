@@ -1,7 +1,6 @@
 import { signIn, getSession, useSession } from "next-auth/react";
 import type { NextPageContext } from "next";
 import Layout from "../components/modules/Layout";
-import Link from "next/link";
 import axios from "axios";
 import { Student } from "../types/student";
 import Image from "next/image";

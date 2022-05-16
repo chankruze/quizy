@@ -17,6 +17,7 @@ import { NextPageContext } from "next";
 import { Quiz } from "../../../types";
 import { Student } from "../../../types/student";
 import { Answer } from "../../../types/submission";
+import moment from "moment";
 
 interface QuizPageProps {
   student: Student;
@@ -36,7 +37,7 @@ const Quiz = ({ student, quiz, alreadyAttempted }: QuizPageProps) => {
 
   // if quiz is invalid
   if (!quiz) {
-    return <InvalidQuiz />;
+    return <InvalidQuiz message="Quiz don't exist!" />;
   }
 
   // if student is invalid
@@ -44,18 +45,44 @@ const Quiz = ({ student, quiz, alreadyAttempted }: QuizPageProps) => {
     return <InvalidStudent />;
   }
 
-  // check if the student is eligible to attempt the quiz
-  // 1. student is not already attempted the quiz
-  if (student && alreadyAttempted) {
-    return <InvalidStudent template="ALREADY_ATTEMPTED" />;
+  // check quiz time validity
+  // check if quiz is expired
+  if (moment(moment(quiz.endDate)).isBefore(moment())) {
+    return <InvalidQuiz message="Date & Time for this quiz has expired 😭" />;
   }
-  // 2. student belongs to the same branch and semester as the quiz
-  // TODO: check if the student belongs to the same branch (array) and semester as the quiz
+
+  // check if quiz is not started
+  if (moment(quiz.startDate).isAfter(moment())) {
+    return <InvalidQuiz message="Plese wait for the quiz to start 🙂" />;
+  }
+
+  // student verification status
+  // pending
+  if (student.verification === "pending") {
+    return <InvalidStudent message="Your bio data verification is pending." />;
+  }
+
+  // if student is not verified
+  // rejected
+  if (student.verification === "rejected") {
+    return (
+      <InvalidStudent message="Your bio data is rejected. Please correct your details" />
+    );
+  }
+
+  // student belongs to the same branch and semester as the quiz
   if (
     student.bioData.semester !== quiz?.semester &&
     student.bioData.branch !== quiz?.branch
   ) {
-    return <InvalidStudent template="NOT_ELIGIBLE" />;
+    return (
+      <InvalidStudent message="The quiz is not for your branch or semester" />
+    );
+  }
+
+  // student is not already attempted the quiz
+  if (student && alreadyAttempted) {
+    return <InvalidStudent message="You have already attempted this quiz." />;
   }
 
   const submit = (answer: Answer) => {
@@ -123,7 +150,7 @@ export async function getServerSideProps(context: NextPageContext) {
   // get quiz data
   try {
     const { data } = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/quiz/${quizId}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/quiz/${quizId}/live`,
     );
     quiz = data;
   } catch (err) {

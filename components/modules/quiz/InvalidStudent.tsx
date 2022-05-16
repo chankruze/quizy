@@ -6,74 +6,33 @@ Copyright (c) geekofia 2022 and beyond
 */
 
 import Link from "next/link";
+import Layout from "../Layout";
 
 interface Props {
-  template?: string;
+  message?: string;
 }
 
-const InvalidStudent = ({ template }: Props) => {
-  switch (template) {
-    case "ALREADY_ATTEMPTED":
-      return (
-        <div className="text-center p-3">
-          <p className="p-4 text-center text-base text-gray-700 font-nunito sm:mt-4 sm:text-xl lg:text-lg xl:text-xl">
-            You have already attempted this quiz!
+const InvalidStudent = ({ message }: Props) => {
+  return (
+    <Layout navbar>
+      <main className="w-full max-w-6xl m-auto flex-1 py-2 px-2 sm:px-4">
+        <div className="text-center w-full">
+          <p className="p-4 text-base text-red-500 font-nunito sm:mt-4 sm:text-xl lg:text-lg xl:text-xl">
+            {message || "Invalid student"}
           </p>
-          <div className="mt-2 md:inline-block">
-            <Link href="/quiz" passHref>
-              <a
-                className="w-full md:w-auto flex items-center justify-center text-base text-white
-                leading-6 font-medium rounded-md bg-blue-600 shadow-md hover:bg-blue-600/80 duration-150 
-                ease-in-out cursor-pointer py-3 px-8 md:py-4 md:text-lg md:px-10 mx-auto lg:mx-0"
-              >
-                Go back
-              </a>
-            </Link>
-          </div>
+          <Link href="/quiz" passHref>
+            <a
+              className="w-full md:w-auto inline-block text-base text-white 
+              leading-6 font-medium rounded-md bg-blue-600 shadow-md hover:bg-blue-600/80 duration-150 
+              ease-in-out cursor-pointer py-3 px-8 md:py-4 md:text-lg md:px-10 mx-auto"
+            >
+              Go back
+            </a>
+          </Link>
         </div>
-      );
-
-    case "NOT_APPLIED":
-      return (
-        <div className="text-center bg-gray-200 p-3 rounded-md">
-          <p className="p-4 text-center text-base text-gray-700 font-nunito sm:mt-4 sm:text-xl lg:text-lg xl:text-xl">
-            To see and attend quizzes, your bio data must be verified.
-            <br /> You have not filled your bio data yet.
-          </p>
-        </div>
-      );
-
-    case "NOT_VERIFIED":
-      return (
-        <div className="text-center bg-gray-200 p-3 rounded-md">
-          <p className="p-4 text-center text-base text-gray-700 font-nunito sm:mt-4 sm:text-xl lg:text-lg xl:text-xl">
-            To see and attend quizzes, your bio data must be verified.
-            <br /> Your bio data verification is pending.
-          </p>
-          <div className="md:inline-block">
-            <Link href="/bio-data" passHref>
-              <a
-                className="w-full md:w-auto flex items-center justify-center text-base
-                  leading-6 font-medium rounded-md bg-white shadow-md hover:bg-gray-100 duration-150 
-                  ease-in-out cursor-pointer py-3 px-8 md:py-4 md:text-lg md:px-10 mx-auto lg:mx-0"
-              >
-                Check Status
-              </a>
-            </Link>
-          </div>
-        </div>
-      );
-
-    default:
-      return (
-        <div className="text-center bg-gray-200 p-3 rounded-md">
-          <p className="p-4 text-center text-base text-gray-700 font-nunito sm:mt-4 sm:text-xl lg:text-lg xl:text-xl">
-            To see and attend quizzes, your bio data must be verified.
-            <br /> You have not filled your bio data yet.
-          </p>
-        </div>
-      );
-  }
+      </main>
+    </Layout>
+  );
 };
 
 export default InvalidStudent;
