@@ -19,20 +19,16 @@ const EditProfileTab = () => {
 
   if (!session) return null;
 
-  const { name, email, image } = session.user as User;
+  const { email } = session.user as User;
 
   // initial values
   const initialValues = {
-    name: name || "",
     email: email || "",
-    image: image || "",
   };
 
   // validation schema
   const validationSchema = Yup.object({
-    name: Yup.string().required("Name is required"),
     email: Yup.string().email().required("Email is required"),
-    // image: Yup.string().required("Image is required"),
   });
 
   // on submit
@@ -61,8 +57,6 @@ const EditProfileTab = () => {
         {(formikHelpers) => (
           <Form>
             <Input id="email" name="email" placeholder="Email" label="Email" />
-            <Input id="name" name="name" placeholder="Name" label="Name" />
-            <Input id="image" name="image" placeholder="Image" label="Image" />
             <div className="mt-4">
               <SubmitButton
                 label="Update"

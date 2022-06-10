@@ -52,7 +52,7 @@ const BioData = ({ student }: Props) => {
   }
 
   // extract user data from session
-  const { email, name, image } = session?.user as User;
+  const { email } = session?.user as User;
 
   // default verification status
   let verification = "notapplied";
@@ -73,8 +73,8 @@ const BioData = ({ student }: Props) => {
       }
     : {
         email,
-        name: name || "",
-        photo: image,
+        name: "",
+        photo: "",
         fatherName: "",
         branch: "",
         semester: "",
@@ -205,9 +205,6 @@ const BioData = ({ student }: Props) => {
                     name="name"
                     label="Name"
                     placeholder="Enter your name"
-                    // workaround for #23
-                    disabled={name === student?.bioData.name}
-                    disabledMessage="(edit in profile)"
                   />
                   {/* 2. email */}
                   <Input
