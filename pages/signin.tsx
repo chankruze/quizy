@@ -10,7 +10,6 @@ import { Provider } from "next-auth/providers";
 import { getCsrfToken, getProviders } from "next-auth/react";
 import Image from "next/image";
 import Layout from "../components/modules/Layout";
-import ProviderLoginButton from "../components/modules/ProviderLoginButton";
 
 interface SignInProps {
   csrfToken?: string;
@@ -67,11 +66,11 @@ const SignIn: React.FC<SignInProps> = ({ csrfToken, providers }) => {
               );
             }
 
-            return (
-              <div className="py-2 px-4" key={provider.id}>
-                <ProviderLoginButton provider={provider} bgColor="bg-black" />
-              </div>
-            );
+            // return (
+            //   <div className="py-2 px-4" key={provider.id}>
+            //     <ProviderLoginButton provider={provider} bgColor="bg-black" />
+            //   </div>
+            // );
           })}
       </main>
     </Layout>
