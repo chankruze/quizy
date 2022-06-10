@@ -5,6 +5,7 @@ module.exports = {
       "platform-lookaside.fbsbx.com",
       "picsum.photos",
       "avatars.githubusercontent.com",
+      "www.svgrepo.com",
     ],
   },
   reactStrictMode: true,

@@ -7,13 +7,8 @@ Copyright (c) geekofia 2022 and beyond
 
 import { NextPageContext } from "next";
 import { Provider } from "next-auth/providers";
-import {
-  getCsrfToken,
-  getProviders,
-  getSession,
-  signIn,
-} from "next-auth/react";
-import Link from "next/link";
+import { getCsrfToken, getProviders } from "next-auth/react";
+import Image from "next/image";
 import Layout from "../components/modules/Layout";
 import ProviderLoginButton from "../components/modules/ProviderLoginButton";
 
@@ -25,18 +20,15 @@ interface SignInProps {
 const SignIn: React.FC<SignInProps> = ({ csrfToken, providers }) => {
   return (
     <Layout
-      title="Login"
+      title="SignIn"
       className="flex flex-col w-full flex-1 bg-gray-50 min-h-screen items-center user-select-none"
     >
-      <main
-        className="bg-white w-[400px] flex flex-col
-            p-4 rounded drop-shadow-md my-auto"
-      >
-        <div>
-          <img
+      <main className="bg-white w-[400px] flex flex-col p-4 rounded drop-shadow-md my-auto">
+        <div className="relative h-32 w-32 mx-auto -mt-20">
+          <Image
             src="https://www.svgrepo.com/show/327408/logo-vercel.svg"
-            className="h-32 w-32 mx-auto -mt-20"
             alt="Postman"
+            layout="fill"
           />
         </div>
         {/* signin / signup */}
@@ -50,6 +42,7 @@ const SignIn: React.FC<SignInProps> = ({ csrfToken, providers }) => {
                   method="post"
                   action="/api/auth/signin/email"
                   className="py-2 px-4"
+                  key={provider.id}
                 >
                   <p className="font-medium text-sm">Email</p>
                   <input

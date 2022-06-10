@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const colors = require("tailwindcss/colors");
+const { colors } = require("tailwindcss/defaultTheme").colors;
 
 module.exports = {
   mode: "jit",
