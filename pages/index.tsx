@@ -51,10 +51,6 @@ const Home = ({ student }: Props) => {
                 text-gray-900 sm:leading-none sm:text-6xl lg:text-5xl xl:text-6xl"
                 >
                   Welcome 👋
-                  <br />
-                  <span className="text-blue-600 text-xl">
-                    {session.user?.email}
-                  </span>
                 </h1>
                 <p className="mt-3 text-base text-gray-700 font-nunito sm:mt-4 sm:text-xl lg:text-lg xl:text-xl">
                   To attend a quiz your bio data to be verified 🙂. You just
