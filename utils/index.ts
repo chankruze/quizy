@@ -5,7 +5,8 @@ Created: Mon Apr 18 2022 21:08:16 GMT+0530 (India Standard Time)
 Copyright (c) geekofia 2022 and beyond
 */
 
-import { Question } from "../types";
+import moment from "moment";
+import { Question, Quiz } from "../types";
 import { Submission } from "../types/submission";
 
 export const capitalize = (s: string) => {
@@ -34,4 +35,12 @@ export const calculateScore = (
 
     return prev;
   }, 0);
+};
+
+// expiry check of a quiz
+export const quizIsExpired = (quiz: Quiz) => {
+  return (
+    moment(quiz.startDate).isBefore(moment()) &&
+    moment(quiz.endDate).isBefore(moment())
+  );
 };

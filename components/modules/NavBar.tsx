@@ -58,9 +58,11 @@ const NavBar = () => {
         {status === "authenticated" ? (
           <>
             <div className="flex justify-center items-center gap-4">
-              {navbarLinks.map((link) => (
-                <NavLink key={link.name} link={link} showIcon />
-              ))}
+              {navbarLinks
+                .filter((it) => it.url !== "/profile")
+                .map((link) => (
+                  <NavLink key={link.name} link={link} showIcon />
+                ))}
             </div>
             <Link href="/profile" passHref>
               <div className="h-8 w-8 relative flex justify-center items-center">

@@ -96,7 +96,7 @@ const Quiz = ({ student, quiz, alreadyAttempted }: QuizPageProps) => {
       })
       .then((res) => {
         if (res.status === 201) {
-          Router.push(`/quiz/${quiz._id}/submission/${res.data.submissionId}`);
+          Router.push(`/quiz/${quiz._id}/result/${res.data.submissionId}`);
         }
       })
       .catch((err) => {

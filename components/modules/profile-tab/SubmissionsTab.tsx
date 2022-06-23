@@ -70,7 +70,7 @@ const SubmissionsTab = () => {
                 </td>
                 <td className="flex-1">
                   <Link
-                    href={`/quiz/${submission.quizId}/submission/${submission._id}`}
+                    href={`/quiz/${submission.quizId}/result/${submission._id}`}
                     passHref
                   >
                     <a className="text-blue-500 flex justify-center items-center">
