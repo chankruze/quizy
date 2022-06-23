@@ -18,5 +18,5 @@ export const config = {
   APP_AUTHOR_GITHUB: "https://github.com/chankruze",
   APP_AUTHOR_INSTAGRAM: "https://www.instagram.com/chankruze/",
   APP_AUTHOR_YOUTUBE: "https://www.youtube.com/c/geekofia",
-  DEFAULT_TIMER: 60,
+  DEFAULT_TIMER: 20,
 };
