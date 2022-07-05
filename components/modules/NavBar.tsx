@@ -35,7 +35,7 @@ const NavBar = () => {
     <div className="w-full flex justify-between items-center p-2 sm:px-4">
       <div className="flex gap-1">
         <Link href="/" passHref>
-          <p className="flex items-center font-bold font-poppins text-3xl text-blue-500 cursor-pointer">
+          <p className="flex items-center font-bold font-poppins sm:text-3xl text-blue-500 cursor-pointer">
             <SiVercel size={32} />
             <a className="ml-1">{config.APP_NAME}</a>
           </p>

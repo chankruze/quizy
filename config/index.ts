@@ -7,10 +7,10 @@ Copyright (c) geekofia 2022 and beyond
 
 export const DEFAULT_QUIZ_COUNT = 10;
 export const config = {
-  APP_NAME: "Quizy",
+  APP_NAME: "B.O.S.E. Quizy",
   APP_VERSION: "2.0.0-beta",
   APP_DESCRIPTION:
-    "Quizy is a quiz app for students and faculties to create quizes and test their knowledge.",
+    "Quizy is a academic quiz app for students and faculties to create quizes and test their knowledge.",
   APP_AUTHOR: "chankruze",
   APP_AUTHOR_EMAIL: "chankruze@gmail.com",
   APP_AUTHOR_TWITTER: "https://twitter.com/chankruze",
